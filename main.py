@@ -1,19 +1,13 @@
 from player import Player
-from enemy import Enemy, Troll
+from enemy import Troll, Vampire
 
 konrad = Player("Konrad")
-random_monster = Enemy("Basic enemy",12,1)
-print(random_monster)
-random_monster.take_damage(4)
-print(random_monster)
-
-random_monster.take_damage(8)
-print(random_monster)
 
 
-random_monster.take_damage(9)
-print(random_monster)
+cave_troll = Troll("cave_troll")
 
-cave_troll = Troll("cave_troll",14)
-
-print(cave_troll)
+vampire = Vampire("Dracula")
+print(vampire)
+while vampire.alive:
+        vampire.take_damage(1)
+        print(vampire)
