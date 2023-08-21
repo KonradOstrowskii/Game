@@ -1,6 +1,15 @@
 import random
 
-class Elf(object):
+class Race:
+    def __init__(self, name, description, bonus_dmg=0, extra_hit_points=0):
+        self.name = name
+        self.description = description
+        self.bonus_dmg = bonus_dmg
+        self.extra_hit_points = extra_hit_points
+        self.skills = {}
+        
+
+class Elf(Race):
     """
     
      Dwarf class that player can choose early in the game
@@ -17,23 +26,25 @@ class Elf(object):
         self.name = name
         self.bonus_dmg = bonus_dmg
         self.extra_hit_points = extra_hit_points
+        super().__init__(name, bonus_dmg, extra_hit_points)
+        self.skills["dodges"] = self.dodges
         
     def __str__(self):
         description = "Elf : Graceful and intelligent beings, Elves are known for their agility and affinity for magic."
         return description
     
     def dodges(self):
-        if random.randint(1,3) == 3:
+        if random.randint(1,5) == 5:
             print("**** {0.name} dodges *****".format(self))
             return True
         else:
             return False
     
-    def take_damage(self, damage):
-        if not self.dodges():
-            super().take_damage(damage)
+    # def take_damage(self, damage):
+    #     if not self.dodges():
+    #         super().take_damage(damage)
         
-class Dwarf(object):
+class Dwarf(Race):
     """
     
      Dwarf class that player can choose early in the game
@@ -50,6 +61,7 @@ class Dwarf(object):
         self.name = name
         self.bonus_dmg = bonus_dmg
         self.extra_hit_points = extra_hit_points
+        super().__init__(name, bonus_dmg, extra_hit_points)
         
     def __str__(self):   
         description = "Dwarf : Sturdy and resilient, Dwarves are skilled miners and craftsmen, with a natural resistance to damage."

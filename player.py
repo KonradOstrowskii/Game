@@ -20,6 +20,8 @@ class Player(object):
         self._score = 0
         self.race = None
         self.race_name = None
+        self.skills = {}
+        self.alive = True
 
     def _get_lives(self):
         return self._lives
@@ -36,21 +38,6 @@ class Player(object):
 
     def _get_level(self):
         return self._level
-    
-    def take_damage(self,damage):
-        remaining_points = self._hit_points - damage
-        if remaining_points >= 0:
-            self._hit_points = remaining_points
-            print("I took {} points damage and have {} left.".format(damage, self._hit_points))
-        else:
-            self._lives -=1
-            
-            if self._lives > 0:
-                print("{0._name} lost a life".format(self))
-                self._hit_points == self._hit_points 
-            else:
-                print("{0._name} is dead".format(self))
-                self.alive = False
 
 
     lives = property(_get_lives, _set_lives,_get_score)
@@ -62,17 +49,44 @@ class Player(object):
     @score.setter
     def score(self, score):
         self._score = score
+    
+    def take_damage(self,damage):
+        total_hit_points = self._hit_points + self.race.extra_hit_points
+        remaining_points = total_hit_points - damage
+        if self.dodges():    
+            if remaining_points >= 0:
+                self._hit_points = remaining_points
+                print("I took {} points damage and have {} left.".format(damage, self._hit_points))
+            else:
+                self._lives -=1
+                
+                if self._lives > 0:
+                    print("{0._name} lost a life".format(self))
+                    self._hit_points == self._hit_points 
+                else:
+                    print("{0.player} is dead".format(self))
+                    self.alive = False
+
+    def add_skill(self, skill_name, skill_function):
+        self.skills[skill_name] = skill_function
         
     def apply_race_bonuses(self):
         if self.race:
-            self.race_name = self.race.name
             for attribute in dir(self.race):
                 if not attribute.startswith('__') and not callable(getattr(self.race, attribute)):
                     setattr(self, attribute, getattr(self.race, attribute))
-                    if attribute == 'extra_hit_points':
-                        self._hit_points += getattr(self.race, attribute)  # Add extra hit points
-                    if attribute == 'bonus_dmg':
-                        self._damage += getattr(self.race, attribute)
+
+            # Set take_damage method from race if available
+            if hasattr(self.race, 'take_damage'):
+                self.take_damage = self.race.take_damage
+
+            # Set dodges method from race if available
+            if hasattr(self.race, 'dodges'):
+                self.dodges = self.race.dodges
+
+            # Add race-specific skills to the player
+            for skill_name, skill_function in self.race.skills.items():
+                self.add_skill(skill_name, skill_function)
 
 
     def __str__(self):
