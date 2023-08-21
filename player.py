@@ -1,18 +1,25 @@
 class Player(object):
 
     def __init__(self, name):
-        """_summary_
+        """ Player class : creating new player.
 
         Args:
             name (str): Name of the player
+            lives (int):  Lives of the player
+            level (int): Level of the player
+            score (float): Score of the player
         """
         self.name = name
-        self._lives = 3
+        self._lives = 1
         self._level = 1
+        self._hit_points = self._level * 10
         self._score = 0
 
     def _get_lives(self):
         return self._lives
+    
+    def _get_score(self):
+        return self.score
 
     def _set_lives(self, lives):
         if lives >= 0:
@@ -24,16 +31,8 @@ class Player(object):
     def _get_level(self):
         return self._level
 
-    def _set_level(self, level):
-        if level > 0:
-            delta = level - self._level
-            self._score += delta * 1000
-            self._level = level
-        else:
-            print("Level can't be less than 1")
 
-    lives = property(_get_lives, _set_lives)
-    level = property(_get_level, _set_level)
+    lives = property(_get_lives, _set_lives,_get_score)
 
     @property 
     def score(self):

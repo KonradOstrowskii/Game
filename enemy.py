@@ -21,8 +21,10 @@ class Monster:
             print("I took {} points damage and have {} left.".format(damage, self._hit_points))
         else:
             self._lives -=1
+            
             if self._lives > 0:
                 print("{0._name} lost a life".format(self))
+                self._hit_points == self._hit_points 
             else:
                 print("{0._name} is dead".format(self))
                 self.alive = False
@@ -38,7 +40,7 @@ class Troll(Monster):
         
 class Vampire(Monster):
     
-    def __init__(self, name="Enemy", hit_points=12, lives=3):
+    def __init__(self, name="Enemy", hit_points=12, lives=2):
         super().__init__(name, hit_points, lives)
         
     def dodges(self):
