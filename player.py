@@ -1,6 +1,11 @@
 class Player(object):
 
     def __init__(self, name):
+        """_summary_
+
+        Args:
+            name (str): Name of the player
+        """
         self.name = name
         self._lives = 3
         self._level = 1
