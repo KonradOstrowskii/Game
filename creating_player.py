@@ -19,3 +19,7 @@ if race_choice.lower() == "elf":
 elif race_choice.lower() == "dwarf":
     player.race = dwarf_race
     player.apply_race_bonuses()
+print(player)  
+print(player.take_damage(8))
+print(player.take_damage(8))
+print(player.take_damage(8))
