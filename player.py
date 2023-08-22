@@ -59,6 +59,7 @@ class Player(object):
     @score.setter
     def score(self, score):
         self._score = score
+        
     
     def take_damage(self, damage):
         if self.race and hasattr(self.race, 'dodges') and self.race.dodges():
@@ -100,9 +101,23 @@ class Player(object):
             
             if hasattr(self.race, 'block'):
                 self.block = self.race.block
+                
+            if hasattr(self.race, 'berserk'):
+                self.berserk = self.race.berserk
 
             for skill_name, skill_function in self.race.skills.items():
                 self.add_skill(skill_name, skill_function)
+
+    def attack(self, target):
+        # Check if the player's race has the berserk ability
+        if hasattr(self.race, 'berserk') and self.race.berserk():
+            print("**** Berserk activated! ****")
+            # Add the bonus damage from Berserk to the total damage
+            damage_dealt = self._damage + self.bonus_dmg
+        else:
+            damage_dealt = self._damage
+        
+        target.take_damage(damage_dealt)
 
     def __str__(self):
         race_name = self.race.name if self.race else "No race"
