@@ -1,7 +1,7 @@
 from player import Player
 from race import Elf, Dwarf, Orc
 from fight import Fight
-from enemy import Troll
+from enemy import Troll, Vampire
 import random
 
 def print_race_descriptions():
@@ -44,7 +44,7 @@ player = Player("")
 print("Welcome to the Player Creation Menu!")
 create_player()
 
-cave_troll = Troll(name="Cave Troll", hit_points=20, lives=3, damage=8)
+cave_troll = Vampire(name="Vampire", hit_points=20, lives=3, damage=8)
 
 # Start the fight
 fight = Fight(player, cave_troll)

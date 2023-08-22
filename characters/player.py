@@ -1,4 +1,4 @@
-from race import Elf, Dwarf, Race
+from race import Elf, Dwarf, Race, Orc
 class Player(object):
     """
     Player class: Represents a player character in the game.
@@ -78,10 +78,10 @@ class Player(object):
                 
                 if self._lives > 0:
                     self._hit_points = self._level * 10 + self.race.extra_hit_points
-                    return "{0.name} lost a life".format(self)
+                    return "Player lost a life".format(self)
                 else:
                     self.alive = False
-                    return "{0.name} is dead".format(self)
+                    return "Player is dead".format(self)
 
     def add_skill(self, skill_name, skill_function):
         self.skills[skill_name] = skill_function
