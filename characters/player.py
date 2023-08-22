@@ -118,6 +118,29 @@ class Player(object):
             damage_dealt = self._damage
         
         target.take_damage(damage_dealt)
+        
+
+    def equip_items(self, equipment):
+            """
+            Equip items from the equipment to the player.
+            
+            Args:
+                equipment (Equipment): The equipment containing items to be equipped.
+            """
+            for slot_type, item in equipment.slots.items():
+                if item:
+                    self.apply_item_bonus(item)
+
+    def apply_item_bonus(self, item):
+        """
+        Apply the bonus provided by the equipped item.
+        
+        Args:
+            item (Item): The equipped item.
+        """
+        bonus_type = item.bonus_type
+        bonus_value = item.bonus_value
+        setattr(self, bonus_type, getattr(self, bonus_type) + bonus_value)
 
     def __str__(self):
         race_name = self.race.name if self.race else "No race"

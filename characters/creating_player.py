@@ -1,6 +1,6 @@
 from player import Player
 from race import Elf, Dwarf, Orc
-from fight import Fight
+from combat import Fight
 from enemy import Troll, Vampire
 import random
 
