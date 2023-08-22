@@ -1,4 +1,4 @@
-from Game.characters.player import Player
+from player import Player
 
 class Equipment:
     """
