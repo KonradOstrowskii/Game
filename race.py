@@ -10,9 +10,9 @@ class Race:
 
 class Elf(Race):
     """
-    
-     Dwarf class that player can choose early in the game
-     
+    Elves are graceful and intelligent beings, known for their agility and affinity for magic.
+    As an Elf, you possess the unique ability to dodge attacks with a 20% chance, 
+    showcasing your exceptional reflexes and evasive skills.
     """
     def __init__(self,name ="Elf", bonus_dmg = 6, extra_hit_points = 5):
         """
@@ -29,10 +29,20 @@ class Elf(Race):
         self.skills["dodges"] = self.dodges
         
     def __str__(self):
-        description = "Elf : Graceful and intelligent beings, Elves are known for their agility and affinity for magic."
-        return description
+            description = """
+            Elves are graceful and intelligent beings, known for their agility and affinity for magic.
+            As an Elf, you possess the unique ability to dodge attacks with a 20% chance, 
+            showcasing your exceptional reflexes and evasive skills.
+            """
+            return description
     
     def dodges(self):
+        """
+        Checks if the Elf successfully dodges an attack there is 20% chance.
+
+        Returns:
+            bool: True if the dodge is successful, False otherwise.
+        """
         if random.randint(1,5) == 5:
             return True
         else:
@@ -41,9 +51,10 @@ class Elf(Race):
         
 class Dwarf(Race):
     """
-    
-     Dwarf class that player can choose early in the game
-     
+    Dwarf class that player can choose early in the game.
+    Dwarves are sturdy and resilient beings, known for their mining skills and craftsmanship.
+    As a Dwarf, your natural resistance to damage grants you the ability to block attacks with a 20% chance,
+    allowing you to mitigate incoming damage and showcase your toughness.
     """
     def __init__(self,name = "Dwarf", bonus_dmg =3, extra_hit_points = 10):
         """
@@ -58,7 +69,21 @@ class Dwarf(Race):
         self.extra_hit_points = extra_hit_points
         super().__init__(name, bonus_dmg, extra_hit_points)
     
+    def __str__(self):
+        description = """
+        Dwarves are sturdy and resilient beings, known for their mining skills and craftsmanship.
+        As a Dwarf, your natural resistance to damage grants you the ability to block attacks with a 20% chance,
+        allowing you to mitigate incoming damage and showcase your toughness.
+        """
+        return description
+    
     def block(self):
+        """
+        Checks if the Dwarf successfully blocks an attack there is 20 % chance.
+
+        Returns:
+            bool: True if the block is successful, False otherwise.
+        """
         if random.randint(1,5) == 5:
             return True
         else:
