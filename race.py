@@ -88,3 +88,44 @@ class Dwarf(Race):
             return True
         else:
             return False
+
+
+class Orc(Race):
+    """
+    Orc class that player can choose early in the game.
+    Orcs are fierce and powerful creatures, known for their raw strength and aggression.
+    As an Orc, you have a 20% chance to trigger your Berserk ability, allowing you to deal
+    increased damage for a limited time. Unleash your inner fury and overwhelm your foes!
+    """
+    def __init__(self, name="Orc", bonus_dmg=7, extra_hit_points=3):
+        """
+        Args:
+            name (str): Orc
+            bonus_dmg (int): Bonus damage. Defaults to 4.
+            extra_hit_points (int): Extra hit points. Defaults to 5.
+        """
+        self.name = name
+        self.bonus_dmg = bonus_dmg
+        self.extra_hit_points = extra_hit_points
+        super().__init__(name, bonus_dmg, extra_hit_points)
+        
+    def __str__(self) -> str:
+        description ="""
+        Orcs are fierce and powerful creatures, known for their raw strength and aggression.
+        As an Orc, you have a 20% chance to trigger your Berserk ability, allowing you to deal
+        increased damage for a limited time. Unleash your inner fury and overwhelm your foes!
+        """
+        return description
+        
+    def berserk(self):
+        """
+        Check if the Orc's Berserk ability triggers.
+        
+        Returns:
+            bool: True if the Berserk ability triggers, False otherwise.
+        """
+        if random.randint(1, 5) == 5:
+            self.bonus_dmg += 5
+            return True
+        else:
+            return False
