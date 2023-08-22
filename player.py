@@ -22,7 +22,7 @@ class Player(object):
         The player's damage and hit points are initialized based on the initial level.
     """
     def __init__(self, name):
-        self.player = name
+        self.name = name
         self._lives = 1
         self._level = 1
         self._damage = 5
@@ -63,16 +63,16 @@ class Player(object):
     
     def take_damage(self, damage):
         if self.race and hasattr(self.race, 'dodges') and self.race.dodges():
-            return("**** dodge *****")
+            return("**** Player dodge *****")
         elif self.race and hasattr(self.race, 'block') and self.race.block():
-            return("**** block *****")
+            return("**** Player block *****")
         else:
             total_hit_points = self._hit_points
             remaining_points = total_hit_points - damage
 
             if remaining_points >= 0:
                 self._hit_points = remaining_points  # Update hit points
-                return "{0.name} took {1} points damage and has {2} hit points left.".format(self, damage, self._hit_points)
+                return "Player took {1} points damage and has {2} hit points left.".format(self, damage, self._hit_points)
             else:
                 self._lives -= 1
                 
@@ -121,5 +121,5 @@ class Player(object):
 
     def __str__(self):
         race_name = self.race.name if self.race else "No race"
-        return "Name: {0.player}, Lives: {0._lives},Damage: {0._damage} Level: {0._level}, Score {0._score}, Hit Points {0._hit_points}, Race: {1}".format(self,race_name)
+        return "Name: Player, Lives: {0._lives},Damage: {0._damage} Level: {0._level}, Score {0._score}, Hit Points {0._hit_points}, Race: {1}".format(self,race_name)
 

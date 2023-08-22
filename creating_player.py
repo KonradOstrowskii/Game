@@ -1,25 +1,51 @@
 from player import Player
-from race import Elf , Dwarf
+from race import Elf, Dwarf, Orc
+from fight import Fight
+from enemy import Troll
+import random
 
-player_name = input("Please chose your player name : ")
-elf_race = Elf()
-dwarf_race = Dwarf()
-player = Player(player_name)
+def print_race_descriptions():
+    print("Available Races:")
+    print("1. Elf")
+    print(Elf.__str__(Elf()))
+    print("2. Dwarf")
+    print(Dwarf.__str__(Dwarf()))
+    print("3. Orc")
+    print(Orc.__str__(Orc()))
 
-available_race = ("Elf or Dwarf")
-print(available_race)
-print(Elf.__str__(elf_race))
-print(Dwarf.__str__(dwarf_race))
-race_choice = input("Choose a race: ")
+def create_player():
+    player_name = input("Please choose your player name: ")
 
-# Set player's race based on choice
-if race_choice.lower() == "elf":
-    player.race = elf_race
-    player.apply_race_bonuses()
-elif race_choice.lower() == "dwarf":
-    player.race = dwarf_race
-    player.apply_race_bonuses()
-print(player)  
-print(player.take_damage(8))
-print(player.take_damage(8))
-print(player.take_damage(8))
+    print_race_descriptions()
+
+    while True:
+        race_choice = input("Choose a race (1 for Elf, 2 for Dwarf, 3 for Orc): ")
+        if race_choice == "1":
+            player.race = Elf()
+            player.apply_race_bonuses()
+            break
+        elif race_choice == "2":
+            player.race = Dwarf()
+            player.apply_race_bonuses()
+            break
+        elif race_choice == "3":
+            player.race = Orc()
+            player.apply_race_bonuses()
+            break
+        else:
+            print("Invalid choice. Please choose 1 for Elf, 2 for Dwarf or 3 for Orc")
+
+    print("Player created:")
+    print(player)
+
+# Main code
+player = Player("")
+
+print("Welcome to the Player Creation Menu!")
+create_player()
+
+cave_troll = Troll(name="Cave Troll", hit_points=20, lives=3, damage=8)
+
+# Start the fight
+fight = Fight(player, cave_troll)
+fight.start()

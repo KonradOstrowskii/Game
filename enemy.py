@@ -27,7 +27,7 @@ class Monster:
         remaining_points = self._hit_points - damage
         if remaining_points >= 0:
             self._hit_points = remaining_points
-            print("I took {} points damage and have {} left.".format(damage, self._hit_points))
+            print("{} took {} points damage and have {} left.".format(self._name,damage, self._hit_points))
         else:
             self._lives -=1
             
@@ -50,8 +50,8 @@ class Monster:
     
 class Troll(Monster):
     
-    def __init__(self, name,hit_points,damage,lives):
-        super().__init__(name,hit_points, damage,lives)
+    def __init__(self, name,hit_points,lives,damage):
+        super().__init__(name,hit_points, lives,damage)
         
 class Vampire(Monster):
     
