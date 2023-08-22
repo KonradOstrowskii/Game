@@ -1,18 +1,27 @@
 from race import Elf, Dwarf, Race
 class Player(object):
+    """
+    Player class: Represents a player character in the game.
 
+    Args:
+        name (str): The name of the player character.
+    
+    Attributes:
+        player (str): The name of the player character.
+        lives (int): The number of lives the player has.
+        level (int): The level of the player character.
+        damage (int): The base damage inflicted by the player character.
+        hit_points (int): The current hit points of the player character.
+        score (float): The current score of the player character.
+        race (Race): The chosen race instance for the player character.
+        race_name (str): The name of the chosen race.
+        skills (dict): A dictionary of player skills.
+        alive (bool): Indicates if the player character is alive.
+
+    Note:
+        The player's damage and hit points are initialized based on the initial level.
+    """
     def __init__(self, name):
-        """ Player class : creating new player.
-
-        Args:
-            name (str): Name of the player
-            lives (int):  Lives of the player
-            level (int): Level of the player
-            damage (int): Damage of the player
-            hit_points (int): Hit points of the player
-            score (float): Score of the player
-            race (Race, object): Player's chosen race instance.
-        """
         self.player = name
         self._lives = 1
         self._level = 1
@@ -95,11 +104,7 @@ class Player(object):
             for skill_name, skill_function in self.race.skills.items():
                 self.add_skill(skill_name, skill_function)
 
-
-
-
-
     def __str__(self):
         race_name = self.race.name if self.race else "No race"
-        return "Name: {0.player}, Lives: {0._lives},Damage: {0._damage} Level: {0._level}, Score {0._score},Hit Points {0._hit_points}, Race: {1}".format(self,race_name)
+        return "Name: {0.player}, Lives: {0._lives},Damage: {0._damage} Level: {0._level}, Score {0._score}, Hit Points {0._hit_points}, Race: {1}".format(self,race_name)
 
