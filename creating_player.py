@@ -1,6 +1,6 @@
-from player import Player
+from player import Player , Equipment, Weapon, Helmet
 from race import Elf, Dwarf, Orc
-from combat import Fight
+from fight import Fight
 from enemy import Troll, Vampire
 import random
 
@@ -41,6 +41,12 @@ def create_player():
 # Main code
 player = Player("")
 
+equipment = Equipment()
+sword = Weapon("Sword", "A sharp sword", 5)
+helmet = Helmet("Helmet", "A sturdy helmet", 3)
+equipment.equip(sword)
+equipment.equip(helmet)
+player.equip_items(equipment)
 print("Welcome to the Player Creation Menu!")
 create_player()
 
