@@ -44,4 +44,15 @@ class Helmet(Item):
         self.hit_points_bonus = hit_points_bonus
         self.slot_type = 'helmet'
 
+class Armor(Item):
+    def __init__(self, name, description, hit_points_bonus):
+        super().__init__(name, description)
+        self.hit_points_bonus = hit_points_bonus
+        self.slot_type = 'armor'
+
+class shield(Item):
+    def __init__(self, name, description, hit_points_bonus):
+        super().__init__(name, description)
+        self.hit_points_bonus = hit_points_bonus
+        self.slot_type = 'shield'
 
