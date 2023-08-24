@@ -8,7 +8,8 @@ class Monster:
             _name (str): The name of the monster.
             _hit_points (int): The hit points of the monster.
             _lives (int): The remaining lives of the monster.
-            damage (int): The damage dealt by the monster.
+            _damage (int): The damage dealt by the monster.
+            _initial_hit_points (int): Initial hit points for fight.
             alive (bool): True if the monster is still alive, False otherwise.
 
         Args:
@@ -21,24 +22,30 @@ class Monster:
         self._hit_points = hit_points
         self._lives = lives
         self._damage = damage
+        self._initial_hit_points = hit_points
         self.alive = True
         
-    def take_damage(self,damage):
+    def take_damage(self, damage):
         remaining_points = self._hit_points - damage
+
         if remaining_points >= 0:
             self._hit_points = remaining_points
-            print("{} took {} points damage and have {} left.".format(self._name,damage, self._hit_points))
+            print("{} took {} points damage and have {} left.".format(self._name, damage, self._hit_points))
         else:
-            self._lives -=1
-            
+            self._lives -= 1
+
             if self._lives > 0:
-                print("{} took {} points damage and have {} left.".format(self._name,damage, self._hit_points))
-                print("{0._name} lost a life".format(self))
-                self._hit_points == self._hit_points 
+                lost_hp = self._initial_hit_points - self._hit_points  # Calculate lost hit points
+                self._hit_points = self._initial_hit_points  # Reset hit points to initial value
+                print("{0._name} lost a life, took {1} points damage, and reset to {2} hit points.".format(self, damage, self._hit_points))
+                print("{0._name} has {1} lives remaining.".format(self, self._lives))
             else:
-                print("{0._name} is dead".format(self))
+                print("{0._name} lost a life, took {1} points damage".format(self, damage))
+                print("{0._name} is dead.".format(self))
                 self.alive = False
-            
+                self._hit_points = 0
+
+      
     def __str__(self) -> str:
         return "Name : {0._name}, Lives: {0._lives}, Hit points: {0._hit_points}".format(self)
     
