@@ -10,7 +10,7 @@ from enemy import Vampire
 print("Welcome to the Player Creation Menu!")
 player=create_player()
 
-vampire = Vampire(name="Vampire", hit_points=20, lives=3, damage=2)
+vampire = Vampire(name="Vampire", hit_points=20, lives=3, damage=2,experience_reward = 500)
 
 # Start the fight
 print(vampire)

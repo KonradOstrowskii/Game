@@ -9,12 +9,12 @@ class Player(object):
         name (str): The name of the player character.
     
     Attributes:
-        player (str): The name of the player character.
-        lives (int): The number of lives the player has.
-        level (int): The level of the player character.
-        damage (int): The base damage inflicted by the player character.
-        hit_points (int): The current hit points of the player character.
-        score (float): The current score of the player character.
+        name (str): The name of the player character.
+        _lives (int): The number of lives the player has.
+        _level (int): The level of the player character.
+        _experience (int): The experience points earned by the player.
+        _damage (int): The base damage inflicted by the player character.
+        _hit_points (int): The current hit points of the player character.
         race (Race): The chosen race instance for the player character.
         race_name (str): The name of the chosen race.
         skills (dict): A dictionary of player skills.
@@ -27,9 +27,9 @@ class Player(object):
         self.name = name
         self._lives = 1
         self._level = 1
+        self._experience = 0
         self._damage = 5
         self._hit_points = self._level * 10
-        self._score = 0
         self.race = None
         self.race_name = None
         self.skills = {}
@@ -144,8 +144,34 @@ class Player(object):
             self._damage += item.damage_bonus
         elif isinstance(item, Helmet) and item.hit_points_bonus:
             self._hit_points += item.hit_points_bonus
+            
+    def level_up(self):
+        base_experience = 200  # Initial required experience for level 1
+        experience_multiplier = 2.3  # Multiplier for calculating required experience for each level
+
+        for level in range(self._level + 1, self._level + 2): 
+            required_experience = int(base_experience * (experience_multiplier ** (level - 1)))
+            if self._experience >= required_experience:
+                self._level = level
+                self._experience -= required_experience
+                print("{0.name} has leveled up to level {0._level}!".format(self))
+                self._level_up_attributes()
+            else:
+                print("{0.name} does not have enough experience to level up.".format(self))
+
+
+    def gain_experience(self, amount):
+        self._experience += amount
+        self.level_up()
+
+    def _level_up_attributes(self):
+        """
+        Increase player attributes upon leveling up.
+        """
+        self._damage += 2  # Increase damage
+        self._hit_points += 10  # Increase hit points
 
     def __str__(self):
         race_name = self.race.name if self.race else "No race"
-        return "Name: Player, Lives: {0._lives},Damage: {0._damage} Level: {0._level}, Score {0._score}, Hit Points {0._hit_points}, Race: {1}".format(self,race_name)
+        return "Name: {0.name}, Level: {0._level},Damage: {0._damage} Level: {0._level}, Experience {0._experience}, Hit Points {0._hit_points}, Race: {1}".format(self,race_name)
 
