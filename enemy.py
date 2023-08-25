@@ -1,7 +1,7 @@
 import random
 class Monster:
 
-    def __init__(self,name = "Enemy", hit_points = 0, lives= 1, damage = 0):
+    def __init__(self,name = "Enemy", hit_points = 0, lives= 1, damage = 0, experience_reward = 0):
         """A class representing a monster in the game.
 
         Attributes:
@@ -10,6 +10,7 @@ class Monster:
             _lives (int): The remaining lives of the monster.
             _damage (int): The damage dealt by the monster.
             _initial_hit_points (int): Initial hit points for fight.
+            _experience_reward (int): IThe amount of experience points the player receives for defeating the enemy. 
             alive (bool): True if the monster is still alive, False otherwise.
 
         Args:
@@ -23,6 +24,7 @@ class Monster:
         self._lives = lives
         self._damage = damage
         self._initial_hit_points = hit_points
+        self.experience_reward = experience_reward
         self.alive = True
         
     def take_damage(self, damage):
@@ -55,16 +57,19 @@ class Monster:
         attack_result = target.take_damage(damage_dealt)
         print(attack_result)
     
+    def defeat(self):
+        print("You defeated the {}!".format(self._name))
+        return self.experience_reward
     
 class Troll(Monster):
     
-    def __init__(self, name,hit_points,lives,damage):
-        super().__init__(name,hit_points, lives,damage)
+    def __init__(self, name, hit_points, lives, damage, experience_reward):
+        super().__init__(name, hit_points, lives, damage, experience_reward)
         
 class Vampire(Monster):
     
-    def __init__(self, name, hit_points, lives, damage):
-        super().__init__(name, hit_points, lives, damage)
+    def __init__(self, name, hit_points, lives, damage, experience_reward):
+        super().__init__(name, hit_points, lives, damage, experience_reward)
         
     def dodges(self):
         if random.randint(1,3) == 3:
