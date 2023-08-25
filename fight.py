@@ -1,5 +1,3 @@
-import random
-
 class Fight:
     def __init__(self, player, monster):
         self.player = player
@@ -9,10 +7,12 @@ class Fight:
         while self.player.alive and self.monster.alive:
             self.player.attack(self.monster)
             if not self.monster.alive:
-                print("You defeated the {0._name}!".format(self.monster))
-                break
+                experience_gained = self.monster.experience_reward
+                print("You defeated the {0._name} and gained {1} experience!".format(self.monster, experience_gained))
+                self.player.gain_experience(experience_gained)  # Award experience to the player
 
             self.monster.attack(self.player)
             if not self.player.alive:
                 print("The {0._name} defeated you...".format(self.monster))
                 break
+
