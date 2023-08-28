@@ -59,7 +59,7 @@ class Dwarf(Race):
     allowing you to mitigate incoming damage and showcase your toughness.
     Dwarf start with a Weak Hammer and an Plain Helmet, providing additional damage and hit points.
     """
-    def __init__(self,name = "Dwarf", bonus_dmg =3, extra_hit_points = 10):
+    def __init__(self,name = "Dwarf", bonus_dmg =4, extra_hit_points = 7):
         """
 
         Args:
@@ -102,7 +102,7 @@ class Orc(Race):
     increased damage for a limited time. Unleash your inner fury and overwhelm your foes!
     Orcs start with a Blunt Axe and an Old Helmet, providing additional damage and hit points.
     """
-    def __init__(self, name="Orc", bonus_dmg=7, extra_hit_points=3):
+    def __init__(self, name="Orc", bonus_dmg=7, extra_hit_points=4):
         """
         Args:
             name (str): Orc
