@@ -69,16 +69,16 @@ class shoes(Item):
     def __init__(self, name, description, hit_points_bonus):
         super().__init__(name, description)
         self.hit_points_bonus = hit_points_bonus
-        self.slot_type = 'shield'
+        self.slot_type = 'shoes'
         
 class ring(Item):
     def __init__(self, name, description, hit_points_bonus):
         super().__init__(name, description)
         self.hit_points_bonus = hit_points_bonus
-        self.slot_type = 'shield'
+        self.slot_type = 'ring'
 
 class neckless(Item):
     def __init__(self, name, description, hit_points_bonus):
         super().__init__(name, description)
         self.hit_points_bonus = hit_points_bonus
-        self.slot_type = 'shield'
+        self.slot_type = 'neckless'
