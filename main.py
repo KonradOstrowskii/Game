@@ -1,8 +1,8 @@
-from player import Player 
-from equipment import  Equipment, Weapon, Helmet
-from creating_player import create_player
-from fight import Fight
-from enemy import Vampire
+from characters.player import Player 
+from characters.equipment import  Equipment, Weapon, Helmet
+from characters.creating_player import create_player
+from combat.fight import Fight
+from characters.enemy import Vampire
 
 
 

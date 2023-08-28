@@ -3,10 +3,13 @@ class Equipment:
     Represents the equipment slots for a player character.
     
     Attributes:
-        helmet (Helmet): The equipped helmet.
-        weapon (Weapon): The equipped weapon.
-        shield (Shield): The equipped shield.
-        armor (Armor): The equipped armor.
+        helmet (Helmet):       The equipped helmet.
+        weapon (Weapon):       The equipped weapon.
+        shield (Shield):       The equipped shield.
+        armor (Armor):         The equipped armor.
+        shoes (Shoes):         The equipped shoes.
+        ring (Ring):           The equipped ring.
+        neckless (Neckless):   The equipped neckless.
     """
     def __init__(self):
         self.slots = {
