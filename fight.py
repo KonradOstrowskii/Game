@@ -10,6 +10,7 @@ class Fight:
                 experience_gained = self.monster.experience_reward
                 print("You defeated the {0._name} and gained {1} experience!".format(self.monster, experience_gained))
                 self.player.gain_experience(experience_gained)  # Award experience to the player
+                break
 
             self.monster.attack(self.player)
             if not self.player.alive:

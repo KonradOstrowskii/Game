@@ -31,11 +31,11 @@ class Elf(Race):
         
     def __str__(self):
             description = """
-            Elves are graceful and intelligent beings, known for their agility and affinity for magic.
-            As an Elf, you possess the unique ability to dodge attacks with a 20% chance, 
-            showcasing your exceptional reflexes and evasive skills.
-            Elves start with a Narrow Sword and an Basic Cap, providing additional damage and hit points.
-            """
+        Elves are graceful and intelligent beings, known for their agility and affinity for magic.
+        As an Elf, you possess the unique ability to dodge attacks with a 20% chance, 
+        showcasing your exceptional reflexes and evasive skills.
+        Elves start with a Narrow Sword and an Basic Cap, providing additional damage and hit points.
+        """
             return description
     
     def dodges(self):
