@@ -26,8 +26,8 @@ def create_player():
         if race_choice == "1":
             player.race = Elf()
             player.apply_race_bonuses()
-            weak_sword = Weapon("Very Not Sharp Sword", "A dull sword", 2)  # Bonus of 2 damage for Elf
-            weak_helmet = Helmet("Basic Cap", "A simple cap", 1)  # Bonus of 1 hit point for Elf
+            weak_sword = Weapon("Narrow Sword", "A dull sword",damage_bonus= 2)
+            weak_helmet = Helmet("Basic Cap", "A simple cap", hit_points_bonus=1)
             equipment = Equipment()
             equipment.equip(weak_sword)
             equipment.equip(weak_helmet)
@@ -36,8 +36,8 @@ def create_player():
         elif race_choice == "2":
             player.race = Dwarf()
             player.apply_race_bonuses()
-            weak_hammer = Weapon("Weak Hammer", "A lightweight hammer", 1)  # Bonus of 1 damage for Dwarf
-            weak_helmet = Helmet("Plain Helmet", "A simple helmet", 1)  # Bonus of 1 hit point for Dwarf
+            weak_hammer = Weapon("Weak Hammer", "A lightweight hammer", damage_bonus=2)
+            weak_helmet = Helmet("Plain Helmet", "A simple helmet", hit_points_bonus=1) 
             equipment = Equipment()
             equipment.equip(weak_hammer)
             equipment.equip(weak_helmet)
@@ -46,8 +46,8 @@ def create_player():
         elif race_choice == "3":
             player.race = Orc()
             player.apply_race_bonuses()
-            weak_axe = Weapon("Blunt Axe", "A dull axe", 1)  # Bonus of 1 damage for Orc
-            weak_helmet = Helmet("Old Helmet", "A worn helmet", 1)  # Bonus of 1 hit point for Orc
+            weak_axe = Weapon("Blunt Axe", "A dull axe", damage_bonus=2)
+            weak_helmet = Helmet("Old Helmet", "A worn helmet", hit_points_bonus=1)
             equipment = Equipment()
             equipment.equip(weak_axe)
             equipment.equip(weak_helmet)

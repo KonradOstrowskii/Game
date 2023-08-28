@@ -13,6 +13,7 @@ class Elf(Race):
     Elves are graceful and intelligent beings, known for their agility and affinity for magic.
     As an Elf, you possess the unique ability to dodge attacks with a 20% chance, 
     showcasing your exceptional reflexes and evasive skills.
+    Elves start with a Narrow Sword and an Basic Cap, providing additional damage and hit points.
     """
     def __init__(self,name ="Elf", bonus_dmg = 6, extra_hit_points = 5):
         """
@@ -33,6 +34,7 @@ class Elf(Race):
             Elves are graceful and intelligent beings, known for their agility and affinity for magic.
             As an Elf, you possess the unique ability to dodge attacks with a 20% chance, 
             showcasing your exceptional reflexes and evasive skills.
+            Elves start with a Narrow Sword and an Basic Cap, providing additional damage and hit points.
             """
             return description
     
@@ -55,6 +57,7 @@ class Dwarf(Race):
     Dwarves are sturdy and resilient beings, known for their mining skills and craftsmanship.
     As a Dwarf, your natural resistance to damage grants you the ability to block attacks with a 20% chance,
     allowing you to mitigate incoming damage and showcase your toughness.
+    Dwarf start with a Weak Hammer and an Plain Helmet, providing additional damage and hit points.
     """
     def __init__(self,name = "Dwarf", bonus_dmg =3, extra_hit_points = 10):
         """
@@ -74,6 +77,7 @@ class Dwarf(Race):
         Dwarves are sturdy and resilient beings, known for their mining skills and craftsmanship.
         As a Dwarf, your natural resistance to damage grants you the ability to block attacks with a 20% chance,
         allowing you to mitigate incoming damage and showcase your toughness.
+        Dwarf start with a Weak Hammer and an Plain Helmet, providing additional damage and hit points.
         """
         return description
     
@@ -96,6 +100,7 @@ class Orc(Race):
     Orcs are fierce and powerful creatures, known for their raw strength and aggression.
     As an Orc, you have a 20% chance to trigger your Berserk ability, allowing you to deal
     increased damage for a limited time. Unleash your inner fury and overwhelm your foes!
+    Orcs start with a Blunt Axe and an Old Helmet, providing additional damage and hit points.
     """
     def __init__(self, name="Orc", bonus_dmg=7, extra_hit_points=3):
         """
@@ -114,6 +119,7 @@ class Orc(Race):
         Orcs are fierce and powerful creatures, known for their raw strength and aggression.
         As an Orc, you have a 20% chance to trigger your Berserk ability, allowing you to deal
         increased damage for a limited time. Unleash your inner fury and overwhelm your foes!
+        Orcs start with a Blunt Axe and an Old Helmet, providing additional damage and hit points.
         """
         return description
         
