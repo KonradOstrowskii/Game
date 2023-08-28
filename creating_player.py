@@ -15,8 +15,6 @@ def print_race_descriptions():
     print("3. Orc")
     print(Orc.__str__(Orc()))
 
-# Inside creating_player.py
-
 def create_player():
     player_name = input("Please choose your player name: ")
 
