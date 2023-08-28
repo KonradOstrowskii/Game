@@ -13,7 +13,10 @@ class Equipment:
             'helmet': None,
             'weapon': None,
             'shield': None,
-            'armor': None
+            'armor': None,
+            'shoes' : None,
+            'ring' : None,
+            'neckless' : None
         }
 
     def equip(self, item):
@@ -25,7 +28,13 @@ class Equipment:
         """
         slot_type = item.slot_type
         if slot_type in self.slots:
-            self.slots[slot_type] = item
+            if self.slots[slot_type] is None:
+                self.slots[slot_type] = item
+                print("You have equipped {}.".format(item.name))
+            else:
+                print("You already have a {} equipped.".format(slot_type))
+        else:
+            print("Invalid equipment slot: {}.".format(slot_type))
 
 class Item:
     def __init__(self, name, description):
