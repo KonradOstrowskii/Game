@@ -59,4 +59,4 @@ def create_player():
 
     print("Player created:")
     print(player)
-    return player  # Return the created player object
+    return player 
