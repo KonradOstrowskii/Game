@@ -16,7 +16,6 @@ class Player(object):
         _damage (int): The base damage inflicted by the player character.
         _hit_points (int): The current hit points of the player character.
         race (Race): The chosen race instance for the player character.
-        race_name (str): The name of the chosen race.
         skills (dict): A dictionary of player skills.
         alive (bool): Indicates if the player character is alive.
 
@@ -31,7 +30,6 @@ class Player(object):
         self._damage = 5
         self._hit_points = self._level * 10
         self.race = None
-        self.race_name = None
         self.skills = {}
         self.alive = True
 
@@ -90,25 +88,27 @@ class Player(object):
         
     def apply_race_bonuses(self):
         if self.race:
-            self._damage += self.race.bonus_dmg  # Add bonus damage from the race to the player's damage
-            self._hit_points += self.race.extra_hit_points  # Add extra hit points from the race to the player's hit points
+            self._damage += self.race.bonus_dmg
+            self._hit_points += self.race.extra_hit_points
+            
+            # Copy skills from the race to the player's skills
+            for skill_name, skill_function in self.race.skills.items():
+                self.add_skill(skill_name, skill_function)
             
             for attribute in dir(self.race):
                 if not attribute.startswith('__') and not callable(getattr(self.race, attribute)):
                     if not hasattr(self, attribute):
                         setattr(self, attribute, getattr(self.race, attribute))
+                    
+                    if hasattr(self.race, 'dodges'):
+                        self.dodges = self.race.dodges
+                    
+                    if hasattr(self.race, 'block'):
+                        self.block = self.race.block
+                        
+                    if hasattr(self.race, 'berserk'):
+                        self.berserk = self.race.berserk
 
-            if hasattr(self.race, 'dodges'):
-                self.dodges = self.race.dodges
-            
-            if hasattr(self.race, 'block'):
-                self.block = self.race.block
-                
-            if hasattr(self.race, 'berserk'):
-                self.berserk = self.race.berserk
-
-            for skill_name, skill_function in self.race.skills.items():
-                self.add_skill(skill_name, skill_function)
 
     def attack(self, target):
         # Check if the player's race has the berserk ability
