@@ -6,6 +6,13 @@ class Race:
         self.bonus_dmg = bonus_dmg
         self.extra_hit_points = extra_hit_points
         self.skills = {}
+
+    def add_skill(self, skill_name, skill_function=None):  # Make skill_function parameter optional
+        if skill_function is not None:
+            self.skills[skill_name] = skill_function
+
+    def get_skills_dict(self):
+        return {skill_name: skill_function.__name__ for skill_name, skill_function in self.skills.items()}
         
 
 class Elf(Race):
@@ -27,7 +34,7 @@ class Elf(Race):
         self.bonus_dmg = bonus_dmg
         self.extra_hit_points = extra_hit_points
         super().__init__(name, bonus_dmg, extra_hit_points)
-        self.skills["dodges"] = self.dodges
+        self.add_skill("dodge", self.dodges)
         
     def __str__(self):
             description = """
