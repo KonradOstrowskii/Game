@@ -28,7 +28,6 @@ def load_player_from_json(filename):
 
     player = Player(player_data["name"])
     player._level = player_data["level"]
-    # player._lives = player_data["lives"]
     player._experience = player_data["experience"]
     player._damage = player_data["damage"]
     player._hit_points = player_data["hit_points"]
