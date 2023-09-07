@@ -83,5 +83,5 @@ class Vampire(Monster):
             super().take_damage(damage)
             
 class Wolf(Monster):
-    def __init__(self, name="Wolf", hit_points=4, lives=1, damage=0, experience_reward=200):
+    def __init__(self, name="Wolf", hit_points=22, lives=1, damage=5, experience_reward=200):
         super().__init__(name, hit_points, lives, damage, experience_reward)
