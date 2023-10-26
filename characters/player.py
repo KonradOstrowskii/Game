@@ -1,5 +1,5 @@
-from characters.race import Elf, Dwarf, Race, Orc
-from characters.equipment import  Equipment, Weapon, Helmet
+from race import Elf, Dwarf, Race, Orc
+from equipment import  Equipment, Weapon, Helmet
 
 class Player(object):
     """

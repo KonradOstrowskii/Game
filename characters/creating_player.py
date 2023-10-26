@@ -1,6 +1,6 @@
-from characters.player import Player 
-from characters.equipment import  Equipment, Weapon, Helmet
-from characters.race import Elf, Dwarf, Orc
+from player import Player 
+from equipment import  Equipment, Weapon, Helmet
+from race import Elf, Dwarf, Orc
 
 def print_race_descriptions():
     print("Available Races:")
@@ -56,3 +56,5 @@ def create_player():
     print("Player created:")
     print(player)
     return player 
+
+create_player()
