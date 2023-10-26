@@ -1,10 +1,6 @@
 from characters.player import Player 
 from characters.equipment import  Equipment, Weapon, Helmet
 from characters.race import Elf, Dwarf, Orc
-from combat.fight import Fight
-from characters.enemy import Vampire
-import random
-
 
 def print_race_descriptions():
     print("Available Races:")
