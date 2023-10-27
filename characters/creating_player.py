@@ -1,6 +1,7 @@
-from player import Player 
-from equipment import  Equipment, Weapon, Helmet
+from player import Player
+from equipment import Equipment, Weapon, Helmet
 from race import Elf, Dwarf, Orc
+
 
 def print_race_descriptions():
     print("Available Races:")
@@ -10,6 +11,7 @@ def print_race_descriptions():
     print(Dwarf.__str__(Dwarf()))
     print("3. Orc")
     print(Orc.__str__(Orc()))
+
 
 def create_player():
     player_name = input("Please choose your player name: ")
@@ -23,7 +25,7 @@ def create_player():
         if race_choice == "1":
             player.race = Elf()
             player.apply_race_bonuses()
-            weak_sword = Weapon("Narrow Sword", "A dull sword",damage_bonus= 2)
+            weak_sword = Weapon("Narrow Sword", "A dull sword", damage_bonus=2)
             weak_helmet = Helmet("Basic Cap", "A simple cap", hit_points_bonus=1)
             equipment = Equipment()
             equipment.equip(weak_sword)
@@ -34,7 +36,7 @@ def create_player():
             player.race = Dwarf()
             player.apply_race_bonuses()
             weak_hammer = Weapon("Weak Hammer", "A lightweight hammer", damage_bonus=2)
-            weak_helmet = Helmet("Plain Helmet", "A simple helmet", hit_points_bonus=1) 
+            weak_helmet = Helmet("Plain Helmet", "A simple helmet", hit_points_bonus=1)
             equipment = Equipment()
             equipment.equip(weak_hammer)
             equipment.equip(weak_helmet)
@@ -55,6 +57,7 @@ def create_player():
 
     print("Player created:")
     print(player)
-    return player 
+    return player
+
 
 create_player()
