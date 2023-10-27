@@ -2,6 +2,8 @@ from player import Player
 from equipment import Equipment, Weapon, Helmet
 from race import Elf, Dwarf, Orc
 
+import flet as ft
+
 
 def print_race_descriptions():
     print("Available Races:")
@@ -59,5 +61,3 @@ def create_player():
     print(player)
     return player
 
-
-create_player()
