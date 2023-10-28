@@ -1,7 +1,9 @@
 import random
+
+
 class Monster:
 
-    def __init__(self,name = "Enemy", hit_points = 0, lives= 1, damage = 0, experience_reward = 0):
+    def __init__(self, name="Enemy", hit_points=0, lives=1, damage=0, experience_reward=0):
         """A class representing a monster in the game.
 
         Attributes:
@@ -26,7 +28,7 @@ class Monster:
         self._initial_hit_points = hit_points
         self.experience_reward = experience_reward
         self.alive = True
-        
+
     def take_damage(self, damage):
         remaining_points = self._hit_points - damage
 
@@ -39,7 +41,8 @@ class Monster:
             if self._lives > 0:
                 lost_hp = self._initial_hit_points - self._hit_points  # Calculate lost hit points
                 self._hit_points = self._initial_hit_points  # Reset hit points to initial value
-                print("{0._name} lost a life, took {1} points damage, and reset to {2} hit points.".format(self, damage, self._hit_points))
+                print("{0._name} lost a life, took {1} points damage, and reset to {2} hit points.".format(self, damage,
+                                                                                                           self._hit_points))
                 print("{0._name} has {1} lives remaining.".format(self, self._lives))
             else:
                 print("{0._name} lost a life, took {1} points damage".format(self, damage))
@@ -47,41 +50,43 @@ class Monster:
                 self.alive = False
                 self._hit_points = 0
 
-      
     def __str__(self) -> str:
         return "Name : {0._name}, Lives: {0._lives}, Hit points: {0._hit_points}".format(self)
-    
+
     def attack(self, target):
         damage_dealt = self._damage
 
         attack_result = target.take_damage(damage_dealt)
         print(attack_result)
-    
+
     def defeat(self):
         print("You defeated the {}!".format(self._name))
         return self.experience_reward
-    
+
+
 class Troll(Monster):
-    
+
     def __init__(self, name, hit_points, lives, damage, experience_reward):
         super().__init__(name, hit_points, lives, damage, experience_reward)
-        
+
+
 class Vampire(Monster):
-    
+
     def __init__(self, name, hit_points, lives, damage, experience_reward):
         super().__init__(name, hit_points, lives, damage, experience_reward)
-        
+
     def dodges(self):
-        if random.randint(1,3) == 3:
+        if random.randint(1, 3) == 3:
             print("****{0._name} dodges *****".format(self))
             return True
         else:
             return False
-    
+
     def take_damage(self, damage):
         if not self.dodges():
             super().take_damage(damage)
-            
+
+
 class Wolf(Monster):
     def __init__(self, name="Wolf", hit_points=22, lives=1, damage=5, experience_reward=200):
         super().__init__(name, hit_points, lives, damage, experience_reward)

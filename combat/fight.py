@@ -16,4 +16,3 @@ class Fight:
             if not self.player.alive:
                 print("The {0._name} defeated you...".format(self.monster))
                 break
-

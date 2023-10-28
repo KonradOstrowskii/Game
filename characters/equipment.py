@@ -11,15 +11,16 @@ class Equipment:
         ring (Ring):           The equipped ring.
         neckless (Neckless):   The equipped neckless.
     """
+
     def __init__(self):
         self.slots = {
             'helmet': None,
             'weapon': None,
             'shield': None,
             'armor': None,
-            'shoes' : None,
-            'ring' : None,
-            'neckless' : None
+            'shoes': None,
+            'ring': None,
+            'neckless': None
         }
 
     def equip(self, item):
@@ -39,10 +40,12 @@ class Equipment:
         else:
             print("Invalid equipment slot: {}.".format(slot_type))
 
+
 class Item:
     def __init__(self, name, description):
         self.name = name
         self.description = description
+
 
 class Weapon(Item):
     def __init__(self, name, description, damage_bonus):
@@ -50,11 +53,13 @@ class Weapon(Item):
         self.damage_bonus = damage_bonus
         self.slot_type = 'weapon'
 
+
 class Helmet(Item):
     def __init__(self, name, description, hit_points_bonus):
         super().__init__(name, description)
         self.hit_points_bonus = hit_points_bonus
         self.slot_type = 'helmet'
+
 
 class Armor(Item):
     def __init__(self, name, description, hit_points_bonus):
@@ -62,23 +67,27 @@ class Armor(Item):
         self.hit_points_bonus = hit_points_bonus
         self.slot_type = 'armor'
 
+
 class shield(Item):
     def __init__(self, name, description, hit_points_bonus):
         super().__init__(name, description)
         self.hit_points_bonus = hit_points_bonus
         self.slot_type = 'shield'
 
+
 class shoes(Item):
     def __init__(self, name, description, hit_points_bonus):
         super().__init__(name, description)
         self.hit_points_bonus = hit_points_bonus
         self.slot_type = 'shoes'
-        
+
+
 class ring(Item):
     def __init__(self, name, description, hit_points_bonus):
         super().__init__(name, description)
         self.hit_points_bonus = hit_points_bonus
         self.slot_type = 'ring'
+
 
 class neckless(Item):
     def __init__(self, name, description, hit_points_bonus):
