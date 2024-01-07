@@ -1,6 +1,6 @@
-from equipment import Equipment, Weapon, Helmet
-from player import Player
-from race import Elf, Dwarf, Orc
+from .equipment import Equipment, Weapon, Helmet
+from .player import Player
+from .race import Elf, Dwarf, Orc
 
 
 def print_race_descriptions():
