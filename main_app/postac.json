@@ -1,14 +1,14 @@
 {
-    "name": "Konrad",
+    "name": "uouo",
     "level": 1,
     "lives": 1,
     "experience": 0,
-    "damage": 11,
-    "hit_points": 18,
+    "damage": 14,
+    "hit_points": 15,
     "race_attributes": {
-        "name": "Dwarf",
-        "bonus_dmg": 4,
-        "extra_hit_points": 7,
-        "skills": {}
+        "name": "Orc",
+        "bonus_dmg": 7,
+        "extra_hit_points": 4,
+        "skills": []
     }
 }

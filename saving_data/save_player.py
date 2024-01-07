@@ -16,13 +16,12 @@ def save_player_to_json(player, filename):
             "name": player.race.name,
             "bonus_dmg": player.race.bonus_dmg,
             "extra_hit_points": player.race.extra_hit_points,
-            "skills": player.race.get_skills_dict()  # Get the skills dictionary
+            "skills": [{"name": name, "function": function.__name__} for name, function in player.race.skills.items()]
         }
     }
 
     with open(filename, "w") as json_file:
         json.dump(player_data, json_file, indent=4)
-
 
 def load_player_from_json(filename):
     with open(filename, 'r') as json_file:
@@ -34,24 +33,25 @@ def load_player_from_json(filename):
     player._damage = player_data["damage"]
     player._hit_points = player_data["hit_points"]
 
-    # Load race attributes
+    # Load race attributes dynamically
     race_name = player_data["race_attributes"]["name"]
     race_bonus_dmg = player_data["race_attributes"]["bonus_dmg"]
     race_extra_hit_points = player_data["race_attributes"]["extra_hit_points"]
-    race_skills = player_data["race_attributes"]["skills"]
+    race_skills_data = player_data["race_attributes"]["skills"]
 
-    if race_name == "Elf":
-        player.race = Elf(name=race_name, bonus_dmg=race_bonus_dmg, extra_hit_points=race_extra_hit_points)
-    elif race_name == "Dwarf":
-        player.race = Dwarf(name=race_name, bonus_dmg=race_bonus_dmg, extra_hit_points=race_extra_hit_points)
-    elif race_name == "Orc":
-        player.race = Orc(name=race_name, bonus_dmg=race_bonus_dmg, extra_hit_points=race_extra_hit_points)
+    # Find the race class dynamically based on the race name
+    race_class = globals().get(race_name, None)
 
-    # Add skills to the player based on the loaded race skills
-    for skill_name in race_skills:
-        skill_function = getattr(player.race, skill_name)
-        player.add_skill(skill_name, skill_function)
+    if race_class is not None:
+        player.race = race_class(name=race_name, bonus_dmg=race_bonus_dmg, extra_hit_points=race_extra_hit_points)
 
-    # Load more attributes as needed
+        # Add skills to the player based on the loaded race skills
+        for skill_data in race_skills_data:
+            skill_name = skill_data["name"]
+            skill_function_name = skill_data["function"]
+            skill_function = getattr(player.race, skill_function_name)
+            player.race.add_skill(skill_name, skill_function)
 
+        # Load more attributes as needed
+    print(player)
     return player
