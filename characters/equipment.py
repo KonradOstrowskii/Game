@@ -68,28 +68,28 @@ class Armor(Item):
         self.slot_type = 'armor'
 
 
-class shield(Item):
+class Shield(Item):
     def __init__(self, name, description, hit_points_bonus):
         super().__init__(name, description)
         self.hit_points_bonus = hit_points_bonus
         self.slot_type = 'shield'
 
 
-class shoes(Item):
+class Shoes(Item):
     def __init__(self, name, description, hit_points_bonus):
         super().__init__(name, description)
         self.hit_points_bonus = hit_points_bonus
         self.slot_type = 'shoes'
 
 
-class ring(Item):
+class Ring(Item):
     def __init__(self, name, description, hit_points_bonus):
         super().__init__(name, description)
         self.hit_points_bonus = hit_points_bonus
         self.slot_type = 'ring'
 
 
-class neckless(Item):
+class Neckless(Item):
     def __init__(self, name, description, hit_points_bonus):
         super().__init__(name, description)
         self.hit_points_bonus = hit_points_bonus
