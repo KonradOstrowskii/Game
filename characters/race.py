@@ -82,6 +82,7 @@ class Dwarf(Race):
         self.bonus_dmg = bonus_dmg
         self.extra_hit_points = extra_hit_points
         super().__init__(name, bonus_dmg, extra_hit_points)
+        self.add_skill("block", self.block)
 
     def __str__(self):
         description = """
@@ -126,6 +127,7 @@ class Orc(Race):
         self.bonus_dmg = bonus_dmg
         self.extra_hit_points = extra_hit_points
         super().__init__(name, bonus_dmg, extra_hit_points)
+        self.add_skill("berserk", self.berserk)
 
     def __str__(self) -> str:
         description = """

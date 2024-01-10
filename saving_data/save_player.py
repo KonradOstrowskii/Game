@@ -47,7 +47,12 @@ def load_player_from_json(filename):
 
         # Add skills to the player based on the loaded race skills
         for skill_name, skill_function_name in race_skills_data.items():
+            # Assuming skill_function_name is the actual function name
             skill_function = getattr(player.race, skill_function_name, None)
+
+            # Alternatively, if skill_function_name is the skill name and the skill functions have consistent names
+            # skill_function = getattr(player.race, skill_function_name.lower(), None)
+
             if skill_function:
                 player.race.add_skill(skill_name, skill_function)
 
