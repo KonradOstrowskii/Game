@@ -1,14 +1,14 @@
 {
-    "name": "uouo",
+    "name": "orc",
     "level": 1,
-    "lives": 1,
+    "lives": 0,
     "experience": 0,
     "damage": 14,
-    "hit_points": 15,
+    "hit_points": 7,
     "race_attributes": {
         "name": "Orc",
         "bonus_dmg": 7,
         "extra_hit_points": 4,
-        "skills": []
+        "skills": {}
     }
 }

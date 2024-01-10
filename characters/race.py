@@ -8,12 +8,12 @@ class Race:
         self.extra_hit_points = extra_hit_points
         self.skills = {}
 
-    def add_skill(self, skill_name, skill_function=None):  # Make skill_function parameter optional
+    def add_skill(self, skill_name, skill_function=None):
         if skill_function is not None:
             self.skills[skill_name] = skill_function
 
     def get_skills_dict(self):
-        return {skill_name: skill_function.__name__ for skill_name, skill_function in self.skills.items()}
+        return {skill_name: skill_function.__name__ if skill_function else None for skill_name, skill_function in self.skills.items()}
 
 
 class Elf(Race):

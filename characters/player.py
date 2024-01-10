@@ -1,4 +1,4 @@
-from Game.characters.equipment import Equipment, Weapon, Helmet
+from .equipment import Equipment, Weapon, Helmet
 
 
 class Player(object):
