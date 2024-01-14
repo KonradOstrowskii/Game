@@ -29,6 +29,20 @@ def save_player_to_json(player):
     with open(filename, "w") as json_file:
         json.dump(player_data, json_file, indent=4)
 
+        import json
+
+def print_json_file(filename):
+    try:
+        with open(filename, 'r') as json_file:
+            data = json.load(json_file)
+            print(json.dumps(data, indent=4))
+    except FileNotFoundError:
+        print(f"File not found: {filename}")
+    except json.JSONDecodeError as e:
+        print(f"Error decoding JSON from file {filename}: {e}")
+
+
+
 
 def list_available_players():
     folder_path = 'saved_players'
@@ -37,22 +51,12 @@ def list_available_players():
     return player_names
 
 
-def load_player_from_json():
+def load_player_from_json(player_name):
     folder_path = 'saved_players'
     available_players = list_available_players()
 
     if not available_players:
         print("No players found in the specified folder.")
-        return None
-
-    print("Available Players:")
-    for name in available_players:
-        print(name)
-
-    player_name = input("Enter the name of the player you want to load: ").capitalize()
-
-    if player_name not in available_players:
-        print(f"Player '{player_name}' not found.")
         return None
 
     filename = os.path.join(folder_path, f"{player_name.lower()}_player.json")
@@ -72,7 +76,7 @@ def load_player_from_json():
 
         if race_class is not None:
             # Create a Player instance with dynamic attributes
-            player = Player(player_data["name"])
+            player = Player(player_name)
 
             # Set attributes dynamically
             for attr_name, attr_value in player_data.items():
