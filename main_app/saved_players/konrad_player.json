@@ -1,0 +1,16 @@
+{
+    "name": "Konrad",
+    "level": 1,
+    "lives": 1,
+    "experience": 0,
+    "damage": 11,
+    "hit_points": 18,
+    "race_attributes": {
+        "name": "Dwarf",
+        "bonus_dmg": 4,
+        "extra_hit_points": 7,
+        "skills": {
+            "block": "block"
+        }
+    }
+}

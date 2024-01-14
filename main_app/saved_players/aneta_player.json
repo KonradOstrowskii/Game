@@ -1,0 +1,16 @@
+{
+    "name": "Aneta",
+    "level": 1,
+    "lives": 1,
+    "experience": 0,
+    "damage": 13,
+    "hit_points": 16,
+    "race_attributes": {
+        "name": "Elf",
+        "bonus_dmg": 6,
+        "extra_hit_points": 5,
+        "skills": {
+            "dodge": "dodges"
+        }
+    }
+}
