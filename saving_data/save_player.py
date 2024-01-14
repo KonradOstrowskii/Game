@@ -3,7 +3,8 @@ from characters.race import Elf, Dwarf, Orc
 from characters.player import Player
 
 
-def save_player_to_json(player, filename):
+def save_player_to_json(player):
+    filename = f"{player.name.lower()}_player.json"
     player_data = {
         "name": player.name,
         "level": player._level,
