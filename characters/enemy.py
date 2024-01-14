@@ -7,12 +7,12 @@ class Monster:
         """A class representing a monster in the game.
 
         Attributes:
-            _name (str): The name of the monster.
-            _hit_points (int): The hit points of the monster.
-            _lives (int): The remaining lives of the monster.
-            _damage (int): The damage dealt by the monster.
-            _initial_hit_points (int): Initial hit points for fight.
-            _experience_reward (int): IThe amount of experience points the player receives for defeating the enemy. 
+            name (str): The name of the monster.
+            hit_points (int): The hit points of the monster.
+            lives (int): The remaining lives of the monster.
+            damage (int): The damage dealt by the monster.
+            initial_hit_points (int): Initial hit points for fight.
+            experience_reward (int): IThe amount of experience points the player receives for defeating the enemy.
             alive (bool): True if the monster is still alive, False otherwise.
 
         Args:

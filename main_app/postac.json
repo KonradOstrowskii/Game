@@ -1,14 +1,16 @@
 {
-    "name": "orc",
+    "name": "dwarf",
     "level": 1,
-    "lives": 0,
-    "experience": 0,
-    "damage": 14,
-    "hit_points": 7,
+    "lives": 1,
+    "experience": 300,
+    "damage": 11,
+    "hit_points": 10,
     "race_attributes": {
-        "name": "Orc",
-        "bonus_dmg": 7,
-        "extra_hit_points": 4,
-        "skills": {}
+        "name": "Dwarf",
+        "bonus_dmg": 4,
+        "extra_hit_points": 7,
+        "skills": {
+            "block": "block"
+        }
     }
 }

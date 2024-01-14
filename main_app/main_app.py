@@ -6,8 +6,11 @@ from characters.enemy import *
 
 from characters.creating_player import create_player, print_race_descriptions
 from saving_data.save_player import save_player_to_json, load_player_from_json
+x = create_player()
+save_player_to_json(x)
 
-player = create_player()
+y = create_player()
+save_player_to_json(y)
 
-save_player_to_json(player)
-
+f = create_player()
+save_player_to_json(f)
