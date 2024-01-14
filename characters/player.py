@@ -34,6 +34,13 @@ class Player(object):
         self.skills = {}
         self.alive = True
 
+
+    def __str__(self):
+        race_name = self.race.name if self.race else "No race"
+        return "Name: {}, Level: {}, Damage: {}, Experience: {}, Hit Points: {}, Race: {}".format(
+                self.name, self._level, self._damage, self._experience, self._hit_points, race_name
+            )
+
     def _get_lives(self):
         return self._lives
 
@@ -168,6 +175,7 @@ class Player(object):
         self._damage += 2  # Increase damage
         self._hit_points += 10  # Increase hit points
 
+    @property
     def __str__(self):
         race_name = self.race.name if self.race else "No race"
         return ("Name: {0.name}, Level: {0._level},Damage: {0._damage} Level: {0._level}, Experience {0._experience}, "
