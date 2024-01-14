@@ -20,7 +20,7 @@ def create_player():
 
     while True:
         player = Player(player_name)
-        print(player)
+
         race_choice = input("Choose a race (1 for Elf, 2 for Dwarf, 3 for Orc): ")
         if race_choice == "1":
             player.race = Elf()
@@ -56,5 +56,4 @@ def create_player():
             print("Invalid choice. Please choose 1 for Elf, 2 for Dwarf, or 3 for Orc")
 
     print("Player created:")
-    print(player)
     return player
