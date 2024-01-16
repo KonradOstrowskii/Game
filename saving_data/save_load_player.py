@@ -16,8 +16,8 @@ def save_player_to_json(player):
         "level": player._level,
         "lives": player._lives,
         "experience": player._experience,
-        "damage": player._damage,
-        "hit_points": player._hit_points,
+        "damage": player._damage + player.race.bonus_dmg,
+        "hit_points": player._hit_points + player.race.extra_hit_points,
         "race_attributes": {
             "name": player.race.name,
             "bonus_dmg": player.race.bonus_dmg,
@@ -29,7 +29,6 @@ def save_player_to_json(player):
     with open(filename, "w") as json_file:
         json.dump(player_data, json_file, indent=4)
 
-        import json
 
 def print_json_file(filename):
     try:
@@ -40,8 +39,6 @@ def print_json_file(filename):
         print(f"File not found: {filename}")
     except json.JSONDecodeError as e:
         print(f"Error decoding JSON from file {filename}: {e}")
-
-
 
 
 def list_available_players():

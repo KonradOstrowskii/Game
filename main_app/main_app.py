@@ -3,7 +3,7 @@ from combat.fight import Fight
 from saving_data.save_load_player import save_player_to_json, load_player_from_json, list_available_players, print_json_file
 from characters.enemy import *
 import os
-
+player_name = ""
 def print_menu():
     print("Menu:")
     print("1. Create a new player")
@@ -18,11 +18,15 @@ def print_menu():
 # save_player_to_json(p)
 if __name__ == "__main__":
     while True:
+        filename = os.path.join("saved_players", f"{player_name.lower()}_player.json")
         print_menu()
         choice = input("Enter your choice (1/2/3): ")
 
         if choice == "1":
-            create_player()
+            created_player= create_player()
+            save_player_to_json(created_player)
+            print_json_file(filename)
+            break
         elif choice == "2":
             # List available players
             available_players = list_available_players()
