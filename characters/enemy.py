@@ -21,46 +21,46 @@ class Monster:
             lives (int): The initial lives of the monster. Defaults to 1.
             damage (int): The damage dealt by the monster. Defaults to 0.
         """
-        self._name = name
-        self._hit_points = hit_points
-        self._lives = lives
-        self._damage = damage
-        self._initial_hit_points = hit_points
+        self.name = name
+        self.hit_points = hit_points
+        self.lives = lives
+        self.damage = damage
+        self.initial_hit_points = hit_points
         self.experience_reward = experience_reward
         self.alive = True
 
     def take_damage(self, damage):
-        remaining_points = self._hit_points - damage
+        remaining_points = self.hit_points - damage
 
         if remaining_points >= 0:
             self._hit_points = remaining_points
-            print("{} took {} points damage and have {} left.".format(self._name, damage, self._hit_points))
+            print("{} took {} points damage and have {} left.".format(self.name, damage, self.hit_points))
         else:
-            self._lives -= 1
+            self.lives -= 1
 
-            if self._lives > 0:
-                lost_hp = self._initial_hit_points - self._hit_points  # Calculate lost hit points
-                self._hit_points = self._initial_hit_points  # Reset hit points to initial value
+            if self.lives > 0:
+                lost_hp = self.initial_hit_points - self.hit_points  # Calculate lost hit points
+                self.hit_points = self.initial_hit_points  # Reset hit points to initial value
                 print("{0._name} lost a life, took {1} points damage, and reset to {2} hit points.".format(self, damage,
-                                                                                                           self._hit_points))
+                                                                                                           self.hit_points))
                 print("{0._name} has {1} lives remaining.".format(self, self._lives))
             else:
                 print("{0._name} lost a life, took {1} points damage".format(self, damage))
                 print("{0._name} is dead.".format(self))
                 self.alive = False
-                self._hit_points = 0
+                self.hit_points = 0
 
     def __str__(self) -> str:
         return "Name : {0._name}, Lives: {0._lives}, Hit points: {0._hit_points}".format(self)
 
     def attack(self, target):
-        damage_dealt = self._damage
+        damage_dealt = self.damage
 
         attack_result = target.take_damage(damage_dealt)
         print(attack_result)
 
     def defeat(self):
-        print("You defeated the {}!".format(self._name))
+        print("You defeated the {}!".format(self.name))
         return self.experience_reward
 
 
@@ -115,7 +115,7 @@ class Werewolf(Monster):
         if random.randint(1, 5) == 5:
             self.damage += 3
             self.hit_points += 5
-            print("{} transformed into a more powerful form!".format(self._name))
+            print("{} transformed into a more powerful form!".format(self.name))
 
 
 class Ghost(Monster):
@@ -124,7 +124,7 @@ class Ghost(Monster):
 
     def phase_through_walls(self):
         if random.randint(1, 3) == 3:
-            print("{} phases through the walls, avoiding damage!".format(self._name))
+            print("{} phases through the walls, avoiding damage!".format(self.name))
             return True
         else:
             return False

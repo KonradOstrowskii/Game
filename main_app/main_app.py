@@ -16,52 +16,55 @@ def print_menu():
 # save_player_to_json(y)
 # p = create_player()
 # save_player_to_json(p)
-if __name__ == "__main__":
-    while True:
-        filename = os.path.join("saved_players", f"{player_name.lower()}_player.json")
-        print_menu()
-        choice = input("Enter your choice (1/2/3): ")
-
-        if choice == "1":
-            created_player= create_player()
-            save_player_to_json(created_player)
-            print_json_file(filename)
-            break
-        elif choice == "2":
-            # List available players
-            available_players = list_available_players()
-            print(available_players)
-            if not available_players:
-                print("No players found.")
-            else:
-                print("Available Players:")
-                for name in available_players:
-                    print(name)
-
-                # Enter the name of the player you want to load
-                player_name = input("Enter the name of the player you want to load: ").capitalize()
-
-                # Check if the entered player name is in the available players list
-                if player_name not in available_players:
-                    print(f"Player '{player_name}' not found.")
-                else:
-                    # Construct the filename based on the entered player name
-                    filename = os.path.join("saved_players", f"{player_name.lower()}_player.json")
-
-                    # Load the player from the file
-                    loaded_player = load_player_from_json(player_name)
-
-
-                    # Print the loaded player information
-                    if loaded_player:
-                        print("Player loaded successfully:")
-                        print_json_file(filename)
-                    else:
-                        print(f"Failed to load player '{player_name}'.")
-        elif choice == "3":
-            print("Exiting the game. Goodbye!")
-            break
-        else:
-            print("Invalid choice. Please enter a valid option.")
-
+# if __name__ == "__main__":
+#     while True:
+#         filename = os.path.join("saved_players", f"{player_name.lower()}_player.json")
+#         print_menu()
+#         choice = input("Enter your choice (1/2/3): ")
+#
+#         if choice == "1":
+#             created_player= create_player()
+#             save_player_to_json(created_player)
+#             print_json_file(filename)
+#             break
+#         elif choice == "2":
+#             # List available players
+#             available_players = list_available_players()
+#             print(available_players)
+#             if not available_players:
+#                 print("No players found.")
+#             else:
+#                 print("Available Players:")
+#                 for name in available_players:
+#                     print(name)
+#
+#                 # Enter the name of the player you want to load
+#                 player_name = input("Enter the name of the player you want to load: ").capitalize()
+#
+#                 # Check if the entered player name is in the available players list
+#                 if player_name not in available_players:
+#                     print(f"Player '{player_name}' not found.")
+#                 else:
+#                     # Construct the filename based on the entered player name
+#                     filename = os.path.join("saved_players", f"{player_name.lower()}_player.json")
+#
+#                     # Load the player from the file
+#                     loaded_player = load_player_from_json(player_name)
+#
+#
+#                     # Print the loaded player information
+#                     if loaded_player:
+#                         print("Player loaded successfully:")
+#                         print_json_file(filename)
+#                     else:
+#                         print(f"Failed to load player '{player_name}'.")
+#         elif choice == "3":
+#             print("Exiting the game. Goodbye!")
+#             break
+#         else:
+#             print("Invalid choice. Please enter a valid option.")
+player_instance = create_player()
+monster_instance = Skeleton()  # Create an instance of the Skeleton class
+fight = Fight(player_instance, monster_instance)
+fight.start()
 
