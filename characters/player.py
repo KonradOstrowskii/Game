@@ -33,6 +33,7 @@ class Player(object):
         self.race = None
         self.skills = {}
         self.alive = True
+        self.equipment = Equipment()
 
     def __str__(self):
         race_name = self.race.name if self.race else "No race"
