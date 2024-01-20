@@ -1,7 +1,8 @@
 import json
 import os
-from characters.race import Elf, Dwarf, Orc
+import random
 from characters.player import Player
+from characters.equipment import *
 
 
 def save_player_to_json(player):
@@ -10,6 +11,18 @@ def save_player_to_json(player):
         os.makedirs(save_folder)
 
     filename = os.path.join(save_folder, f"{player.name.lower()}_player.json")
+
+    # Collect information about equipped items
+    equipped_items = []
+    for slot_type, item in player.equipment.slots.items():
+        if item:
+            item_data = {
+                "name": item.name,
+                "description": item.description,
+                "slot_type": item.slot_type,
+                # Add more item-specific attributes as needed
+            }
+            equipped_items.append(item_data)
 
     player_data = {
         "name": player.name,
@@ -23,7 +36,8 @@ def save_player_to_json(player):
             "bonus_dmg": player.race.bonus_dmg,
             "extra_hit_points": player.race.extra_hit_points,
             "skills": player.race.get_skills_dict()
-        }
+        },
+        "equipment": equipped_items  # Include the equipped items list
     }
 
     with open(filename, "w") as json_file:
@@ -88,18 +102,33 @@ def load_player_from_json(player_name):
                 # Assuming skill_function_name is the actual function name
                 skill_function = getattr(player.race, skill_function_name, None)
 
-                # Alternatively, if skill_function_name is the skill name and the skill functions have consistent names
-                # skill_function = getattr(player.race, skill_function_name.lower(), None)
-
                 if skill_function:
                     player.race.add_skill(skill_name, skill_function)
 
             # Apply race bonuses and methods
             player.apply_race_bonuses()
 
-            # Update the player's level and experience to the loaded level and experience
-            player._level = player_data["level"]
-            player._experience = player_data["experience"]
+            # Load player's equipment
+            equipment_data = player_data.get("equipment", [])
+            for item_data in equipment_data:
+                slot_type = item_data["slot_type"]
+                item = None
+
+                if slot_type == "weapon":
+                    item = Weapon(
+                        name=item_data["name"],
+                        description=item_data["description"],
+                        damage_bonus=item_data["damage_bonus"]
+                    )
+                elif slot_type == "helmet":
+                    item = Helmet(
+                        name=item_data["name"],
+                        description=item_data["description"],
+                        hit_points_bonus=item_data["hit_points_bonus"]
+                    )
+
+                if item:
+                    player.equipment.slots[slot_type] = item
 
             return player
         else:
