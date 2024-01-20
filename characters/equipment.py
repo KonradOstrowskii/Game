@@ -42,10 +42,11 @@ class Equipment:
 
 
 class Item:
-    def __init__(self, name, description, damage_bonus,hit_points_bonus, attributes=None):
+    def __init__(self, name, description, damage_bonus, hit_points_bonus, attributes=None):
         self.name = name
         self.description = description
-        self.damage_bonud = damage_bonus
+        self.damage_bonus = damage_bonus
+        self.hit_points_bonus = hit_points_bonus
         self.attributes = attributes or {}
 
     def add_attribute(self, attribute_name, attribute_value):
@@ -53,14 +54,14 @@ class Item:
 
 
 class Weapon(Item):
-    def __init__(self, name, description, damage_bonus , attributes=None):
-        super().__init__(name, description, damage_bonus, attributes)
+    def __init__(self, name, description, damage_bonus, attributes=None):
+        super().__init__(name, description, damage_bonus, 0, attributes)  # Assuming hit_points_bonus is 0 for weapons
         self.slot_type = 'weapon'
 
 
 class Helmet(Item):
     def __init__(self, name, description, hit_points_bonus, attributes=None):
-        super().__init__(name, description, hit_points_bonus, attributes)
+        super().__init__(name, description, 0, hit_points_bonus, attributes)  # Assuming damage_bonus is 0 for helmets
         self.slot_type = 'helmet'
 
 

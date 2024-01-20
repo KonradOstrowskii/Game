@@ -1,6 +1,7 @@
 import json
 import os
 import random
+from characters.race import *
 from characters.player import Player
 from characters.equipment import *
 
@@ -83,7 +84,13 @@ def load_player_from_json(player_name):
         race_skills_data = player_data["race_attributes"]["skills"]
 
         # Find the race class dynamically based on the race name
-        race_class = globals().get(race_name, None)
+        race_class = None
+        if race_name == "Dwarf":
+            from characters.race import Dwarf
+            race_class = Dwarf
+        elif race_name == "Elf":
+            from characters.race import Elf
+            race_class = Elf
 
         if race_class is not None:
             # Create a Player instance with dynamic attributes

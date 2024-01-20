@@ -129,11 +129,11 @@ class Player(object):
 
     def equip_items(self, equipment):
         """
-            Equip items from the equipment to the player.
-            
-            Args:
-                equipment (Equipment): The equipment containing items to be equipped.
-            """
+        Equip items from the equipment to the player.
+
+        Args:
+            equipment (Equipment): The equipment containing items to be equipped.
+        """
         for slot_type, item in equipment.slots.items():
             if item:
                 self.apply_item_bonus(item)
@@ -141,14 +141,16 @@ class Player(object):
     def apply_item_bonus(self, item):
         """
         Apply the bonus provided by the equipped item.
-        
+
         Args:
             item (Item): The equipped item.
         """
-        if isinstance(item, Weapon) and item.damage_bonus:
-            self._damage += item.damage_bonus
-        elif isinstance(item, Helmet) and item.hit_points_bonus:
-            self._hit_points += item.hit_points_bonus
+        if hasattr(item, 'bonus') and item.bonus:
+            if isinstance(item, Weapon):
+                self._damage += item.bonus
+            elif isinstance(item, Helmet):
+                self._hit_points += item.bonus
+
 
     def level_up(self):
         base_experience = 200  # Initial required experience for level 1
