@@ -1,7 +1,7 @@
 class Equipment:
     """
     Represents the equipment slots for a player character.
-    
+
     Attributes:
         helmet (Helmet):       The equipped helmet.
         weapon (Weapon):       The equipped weapon.
@@ -26,7 +26,7 @@ class Equipment:
     def equip(self, item):
         """
         Equip the specified item to the corresponding equipment slot.
-        
+
         Args:
             item (Item): The item to be equipped.
         """
@@ -42,55 +42,53 @@ class Equipment:
 
 
 class Item:
-    def __init__(self, name, description):
+    def __init__(self, name, description, damage_bonus,hit_points_bonus, attributes=None):
         self.name = name
         self.description = description
+        self.damage_bonud = damage_bonus
+        self.attributes = attributes or {}
+
+    def add_attribute(self, attribute_name, attribute_value):
+        self.attributes[attribute_name] = attribute_value
 
 
 class Weapon(Item):
-    def __init__(self, name, description, damage_bonus):
-        super().__init__(name, description)
-        self.damage_bonus = damage_bonus
+    def __init__(self, name, description, damage_bonus , attributes=None):
+        super().__init__(name, description, damage_bonus, attributes)
         self.slot_type = 'weapon'
 
 
 class Helmet(Item):
-    def __init__(self, name, description, hit_points_bonus):
-        super().__init__(name, description)
-        self.hit_points_bonus = hit_points_bonus
+    def __init__(self, name, description, hit_points_bonus, attributes=None):
+        super().__init__(name, description, hit_points_bonus, attributes)
         self.slot_type = 'helmet'
 
 
 class Armor(Item):
-    def __init__(self, name, description, hit_points_bonus):
-        super().__init__(name, description)
-        self.hit_points_bonus = hit_points_bonus
+    def __init__(self, name, description, attributes=None):
+        super().__init__(name, description, attributes)
         self.slot_type = 'armor'
 
 
 class Shield(Item):
-    def __init__(self, name, description, hit_points_bonus):
-        super().__init__(name, description)
-        self.hit_points_bonus = hit_points_bonus
+    def __init__(self, name, description, attributes=None):
+        super().__init__(name, description, attributes)
         self.slot_type = 'shield'
 
 
 class Shoes(Item):
-    def __init__(self, name, description, hit_points_bonus):
-        super().__init__(name, description)
-        self.hit_points_bonus = hit_points_bonus
+    def __init__(self, name, description, attributes=None):
+        super().__init__(name, description, attributes)
         self.slot_type = 'shoes'
 
 
 class Ring(Item):
-    def __init__(self, name, description, hit_points_bonus):
-        super().__init__(name, description)
-        self.hit_points_bonus = hit_points_bonus
+    def __init__(self, name, description, attributes=None):
+        super().__init__(name, description, attributes)
         self.slot_type = 'ring'
 
 
 class Neckless(Item):
-    def __init__(self, name, description, hit_points_bonus):
-        super().__init__(name, description)
-        self.hit_points_bonus = hit_points_bonus
+    def __init__(self, name, description, attributes=None):
+        super().__init__(name, description, attributes)
         self.slot_type = 'neckless'
