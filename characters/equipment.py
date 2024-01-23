@@ -23,7 +23,7 @@ class Equipment:
             'neckless': None
         }
 
-    def equip(self, item):
+    def equip(self, item, player):
         """
         Equip the specified item to the corresponding equipment slot.
 
@@ -35,6 +35,10 @@ class Equipment:
             if self.slots[slot_type] is None:
                 self.slots[slot_type] = item
                 print("You have equipped {}.".format(item.name))
+
+                # Add the equipped item to the player's equipment slots
+                player.equipment.slots[slot_type] = item
+                return slot_type
             else:
                 print("You already have a {} equipped.".format(slot_type))
         else:
@@ -55,14 +59,30 @@ class Item:
 
 class Weapon(Item):
     def __init__(self, name, description, damage_bonus, attributes=None):
-        super().__init__(name, description, damage_bonus, 0, attributes)  # Assuming hit_points_bonus is 0 for weapons
+        super().__init__(name, description, damage_bonus, 0, attributes)
         self.slot_type = 'weapon'
+
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "description": self.description,
+            "hit_points_bonus": self.hit_points_bonus,
+            "attributes": self.attributes,
+        }
 
 
 class Helmet(Item):
     def __init__(self, name, description, hit_points_bonus, attributes=None):
-        super().__init__(name, description, 0, hit_points_bonus, attributes)  # Assuming damage_bonus is 0 for helmets
+        super().__init__(name, description, 0, hit_points_bonus, attributes)
         self.slot_type = 'helmet'
+
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "description": self.description,
+            "hit_points_bonus": self.hit_points_bonus,
+            "attributes": self.attributes,
+        }
 
 
 class Armor(Item):
