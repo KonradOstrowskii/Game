@@ -28,8 +28,8 @@ def create_player():
             weak_sword = Weapon("Narrow Sword", "A dull sword", damage_bonus=2)
             weak_helmet = Helmet("Basic Cap", "A simple cap", hit_points_bonus=1)
             equipment = Equipment()
-            equipment.equip(weak_sword)
-            equipment.equip(weak_helmet)
+            equipment.equip(weak_sword, player)
+            equipment.equip(weak_helmet, player)
             player.equip_items(equipment)
             break
         elif race_choice == "2":
@@ -38,8 +38,8 @@ def create_player():
             weak_hammer = Weapon("Weak Hammer", "A lightweight hammer", damage_bonus=2)
             weak_helmet = Helmet("Plain Helmet", "A simple helmet", hit_points_bonus=1)
             equipment = Equipment()
-            equipment.equip(weak_hammer)
-            equipment.equip(weak_helmet)
+            equipment.equip(weak_hammer, player)
+            equipment.equip(weak_helmet, player)
             player.equip_items(equipment)
             break
         elif race_choice == "3":
@@ -48,8 +48,8 @@ def create_player():
             weak_axe = Weapon("Blunt Axe", "A dull axe", damage_bonus=2)
             weak_helmet = Helmet("Old Helmet", "A worn helmet", hit_points_bonus=1)
             equipment = Equipment()
-            equipment.equip(weak_axe)
-            equipment.equip(weak_helmet)
+            equipment.equip(weak_axe, player)
+            equipment.equip(weak_helmet, player)
             player.equip_items(equipment)
             break
         else:
