@@ -137,6 +137,7 @@ class Player(object):
         for slot_type, item in equipment.slots.items():
             if item:
                 self.apply_item_bonus(item)
+                return equipment.slots.items()
 
     def apply_item_bonus(self, item):
         """
