@@ -46,7 +46,7 @@ class Equipment:
 
 
 class Item:
-    def __init__(self, name, description, damage_bonus, hit_points_bonus, attributes=None):
+    def __init__(self, name, description, damage_bonus=0, hit_points_bonus=0, attributes=None):
         self.name = name
         self.description = description
         self.damage_bonus = damage_bonus
@@ -59,21 +59,21 @@ class Item:
 
 class Weapon(Item):
     def __init__(self, name, description, damage_bonus, attributes=None):
-        super().__init__(name, description, damage_bonus, 0, attributes)
+        super().__init__(name, description, damage_bonus, attributes)
         self.slot_type = 'weapon'
 
     def to_dict(self):
         return {
             "name": self.name,
             "description": self.description,
-            "hit_points_bonus": self.hit_points_bonus,
+            "damage_bonus": self.damage_bonus,
             "attributes": self.attributes,
         }
 
 
 class Helmet(Item):
     def __init__(self, name, description, hit_points_bonus, attributes=None):
-        super().__init__(name, description, 0, hit_points_bonus, attributes)
+        super().__init__(name, description,hit_points_bonus, attributes)
         self.slot_type = 'helmet'
 
     def to_dict(self):
