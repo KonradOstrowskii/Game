@@ -152,7 +152,6 @@ class Player(object):
             elif isinstance(item, Helmet):
                 self._hit_points += item.bonus
 
-
     def level_up(self):
         base_experience = 200  # Initial required experience for level 1
         experience_multiplier = 2.3  # Multiplier for calculating required experience for each level
