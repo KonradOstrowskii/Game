@@ -7,42 +7,37 @@ from characters.equipment import *
 
 
 def save_player_to_json(player):
-    save_folder = "saved_players"
-    if not os.path.exists(save_folder):
-        os.makedirs(save_folder)
+    folder_path = 'saved_players'
+    player_name = player.name
+    filename = os.path.join(folder_path, f"{player_name.lower()}_player.json")
 
-    filename = os.path.join(save_folder, f"{player.name.lower()}_player.json")
+    equipped_items = {}
+    for key, value in player.equipment.slots.items():
+        d = {key: value.to_dict() if value else None}
+        equipped_items.update(d)
 
-    # Collect information about equipped items
-    equipped_items = []
-    for slot_type, item in player.equipment.slots.items():
-        if item:
-            item_data = {
-                "name": item.name,
-                "description": item.description,
-                "slot_type": item.slot_type,
-                # Add more item-specific attributes as needed
-            }
-            equipped_items.append(item_data)
-
+    # Create a dictionary to store player data
     player_data = {
         "name": player.name,
         "level": player._level,
         "lives": player._lives,
         "experience": player._experience,
-        "damage": player._damage + player.race.bonus_dmg,
-        "hit_points": player._hit_points + player.race.extra_hit_points,
+        "damage": player._damage,
+        "hit_points": player._hit_points,
         "race_attributes": {
             "name": player.race.name,
             "bonus_dmg": player.race.bonus_dmg,
             "extra_hit_points": player.race.extra_hit_points,
-            "skills": player.race.get_skills_dict()
+            "skills": {skill_name: skill_function.__name__ for skill_name, skill_function in player.race.skills.items()},
         },
-        "equipment": equipped_items  # Include the equipped items list
+        "equipment": equipped_items,
     }
 
-    with open(filename, "w") as json_file:
-        json.dump(player_data, json_file, indent=4)
+    # Save player_data to JSON file
+    with open(filename, 'w') as json_file:
+        json.dump(player_data, json_file, indent=2)
+
+    print(f"Player '{player_name}' saved to {filename}")
 
 
 def print_json_file(filename):
@@ -83,7 +78,6 @@ def load_player_from_json(player_name):
         race_extra_hit_points = player_data["race_attributes"]["extra_hit_points"]
         race_skills_data = player_data["race_attributes"]["skills"]
 
-        # Find the race class dynamically based on the race name
         race_class = None
         if race_name == "Dwarf":
             from characters.race import Dwarf
@@ -117,6 +111,7 @@ def load_player_from_json(player_name):
 
             # Load player's equipment
             equipment_data = player_data.get("equipment", [])
+
             for item_data in equipment_data:
                 slot_type = item_data["slot_type"]
                 item = None
@@ -135,6 +130,7 @@ def load_player_from_json(player_name):
                     )
 
                 if item:
+                    player.apply_item_bonus(item)
                     player.equipment.slots[slot_type] = item
 
             return player
