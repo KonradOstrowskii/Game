@@ -13,12 +13,7 @@ def print_menu():
     print("2. Load an existing player")
     print("3. Exit")
 
-# x = create_player()
-# save_player_to_json(x)
-# y = create_player()
-# save_player_to_json(y)
-# p = create_player()
-# save_player_to_json(p)
+
 if __name__ == "__main__":
     while True:
         filename = os.path.join("saved_players", f"{player_name.lower()}_player.json")
