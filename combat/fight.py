@@ -4,23 +4,15 @@ class Fight:
         self.monster = monster
 
     def start(self):
-        print("***** Fight Start! *****")
-        print(f"{self.player.name} vs. {self.monster.name}")
-        print(f"{self.player.name} - Level: {self.player._level}, Hit Points: {self.player._hit_points}")
-        print(f"{self.monster.name} - Hit Points: {self.monster.hit_points}")
-        print("*"*25)
-
-        while self.player.alive and self.monster.alive:
+        while hasattr(self.player, 'alive') and hasattr(self.monster, 'alive') and self.player.alive and self.monster.alive:
             self.player.attack(self.monster)
-
             if not self.monster.alive:
                 experience_gained = self.monster.experience_reward
-                print(f"You defeated the {self.monster.name} and gained {experience_gained} experience!")
-                self.player.gain_experience(experience_gained)
+                print("You defeated the {0.name} and gained {1} experience!".format(self.monster, experience_gained))
+                self.player.gain_experience(experience_gained)  # Award experience to the player
                 break
 
             self.monster.attack(self.player)
-
             if not self.player.alive:
-                print(f"The {self.monster.name} defeated {self.player.name}...")
+                print("The {0.name} defeated you...".format(self.monster))
                 break
