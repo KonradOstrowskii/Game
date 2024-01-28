@@ -149,7 +149,7 @@ class Player(object):
         if hasattr(item, 'bonus') and item.bonus:
             if isinstance(item, Weapon):
                 self._damage += item.bonus
-            elif isinstance(item, Helmet):
+            if isinstance(item, Helmet):
                 self._hit_points += item.bonus
 
     def level_up(self):
