@@ -3,7 +3,7 @@ import random
 
 class Monster:
 
-    def __init__(self, name="Enemy", hit_points=0, lives=1, damage=0, experience_reward=0):
+    def __init__(self, name="Enemy", hit_points=0, lives=1, damage=0, experience_reward=0, alive =True):
         """A class representing a monster in the game.
 
         Attributes:
@@ -72,8 +72,8 @@ class Troll(Monster):
 
 class Vampire(Monster):
 
-    def __init__(self, name, hit_points, lives, damage, experience_reward):
-        super().__init__(name, hit_points, lives, damage, experience_reward)
+    def __init__(self, name, hit_points, lives, damage, experience_reward, alive):
+        super().__init__(name, hit_points, lives, damage, experience_reward, alive=True)
 
     def dodges(self):
         if random.randint(1, 3) == 3:
