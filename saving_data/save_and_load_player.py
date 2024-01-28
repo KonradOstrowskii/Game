@@ -1,7 +1,5 @@
 import json
 import os
-import random
-from characters.race import *
 from characters.player import Player
 from characters.equipment import *
 
