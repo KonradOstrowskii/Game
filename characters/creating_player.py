@@ -35,7 +35,7 @@ def create_player():
             equipment.equip(weak_helmet, player)
             player.equip_items(equipment)
             break
-        elif race_choice == "2":
+        if race_choice == "2":
             player.race = Dwarf()
             player.apply_race_bonuses()
             weak_hammer = Weapon("Weak Hammer", "A lightweight hammer", damage_bonus=2)
@@ -45,7 +45,7 @@ def create_player():
             equipment.equip(weak_helmet, player)
             player.equip_items(equipment)
             break
-        elif race_choice == "3":
+        if race_choice == "3":
             player.race = Orc()
             player.apply_race_bonuses()
             weak_axe = Weapon("Blunt Axe", "A dull axe", damage_bonus=2)
