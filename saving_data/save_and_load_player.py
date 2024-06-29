@@ -2,10 +2,10 @@
 Module for saving and loading player data.
 """
 
-import json
-import os
 from characters.player import Player
 from characters.equipment import Weapon, Helmet, Equipment
+import json
+import os
 
 
 def save_player_to_json(player):
