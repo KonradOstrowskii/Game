@@ -1,3 +1,6 @@
+"""
+Module defining the combat system.
+"""
 from .equipment import Equipment, Weapon, Helmet
 
 

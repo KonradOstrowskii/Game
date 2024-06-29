@@ -2,23 +2,6 @@ import random
 
 class Monster:
     def __init__(self, name="Enemy", hit_points=0, lives=1, damage=0, experience_reward=0, alive=True):
-        """A class representing a monster in the game.
-
-        Attributes:
-            name (str): The name of the monster.
-            hit_points (int): The hit points of the monster.
-            lives (int): The remaining lives of the monster.
-            damage (int): The damage dealt by the monster.
-            initial_hit_points (int): Initial hit points for fight.
-            experience_reward (int): The amount of experience points the player receives for defeating the enemy.
-            alive (bool): True if the monster is still alive, False otherwise.
-
-        Args:
-            name (str): The name of the monster. Defaults to "Enemy".
-            hit_points (int): The initial hit points of the monster. Defaults to 0.
-            lives (int): The initial lives of the monster. Defaults to 1.
-            damage (int): The damage dealt by the monster. Defaults to 0.
-        """
         self.name = name
         self.hit_points = hit_points
         self.lives = lives
@@ -37,8 +20,8 @@ class Monster:
             self.lives -= 1
 
             if self.lives > 0:
-                lost_hp = self.initial_hit_points - self.hit_points  # Calculate lost hit points
-                self.hit_points = self.initial_hit_points  # Reset hit points to initial value
+                lost_hp = self.initial_hit_points - self.hit_points
+                self.hit_points = self.initial_hit_points
                 print("{} lost a life, took {} points damage, and reset to {} hit points.".format(self.name, damage, self.hit_points))
                 print("{} has {} lives remaining.".format(self.name, self.lives))
             else:

@@ -1,14 +1,24 @@
+"""
+Module for saving and loading player data.
+"""
+
 import json
 import os
 from characters.player import Player
 from characters.equipment import Weapon, Helmet, Equipment
 
 def save_player_to_json(player):
+    """
+    Save a player object to a JSON file.
+
+    Args:
+        player (Player): The player object to save.
+    """
     folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'main_app', 'saved_players')
-    
+
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
-    
+
     player_name = player.name
     filename = os.path.join(folder_path, f"{player_name.lower()}_player.json")
 
@@ -33,14 +43,20 @@ def save_player_to_json(player):
         "equipment": equipped_items,
     }
 
-    with open(filename, 'w') as json_file:
+    with open(filename, 'w', encoding='utf-8') as json_file:
         json.dump(player_data, json_file, indent=2)
 
     print(f"Player '{player_name}' saved to {filename}")
 
 def print_json_file(filename):
+    """
+    Print the contents of a JSON file.
+
+    Args:
+        filename (str): The path to the JSON file.
+    """
     try:
-        with open(filename, 'r') as json_file:
+        with open(filename, 'r', encoding='utf-8') as json_file:
             data = json.load(json_file)
             print(json.dumps(data, indent=4))
     except FileNotFoundError:
@@ -49,12 +65,27 @@ def print_json_file(filename):
         print(f"Error decoding JSON from file {filename}: {e}")
 
 def list_available_players():
+    """
+    List all available player files.
+
+    Returns:
+        list: A list of player names.
+    """
     folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'main_app', 'saved_players')
     player_files = [file for file in os.listdir(folder_path) if file.endswith("_player.json")]
     player_names = [file.replace("_player.json", "").capitalize() for file in player_files]
     return player_names
 
 def load_player_from_json(player_name):
+    """
+    Load a player object from a JSON file.
+
+    Args:
+        player_name (str): The name of the player to load.
+
+    Returns:
+        Player: The loaded player object, or None if the player could not be loaded.
+    """
     folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'main_app', 'saved_players')
     available_players = list_available_players()
 
@@ -65,7 +96,7 @@ def load_player_from_json(player_name):
     filename = os.path.join(folder_path, f"{player_name.lower()}_player.json")
 
     if os.path.exists(filename):
-        with open(filename, 'r') as json_file:
+        with open(filename, 'r', encoding='utf-8') as json_file:
             player_data = json.load(json_file)
 
         race_name = player_data["race_attributes"]["name"]
@@ -89,7 +120,7 @@ def load_player_from_json(player_name):
             player.race = race_class(name=race_name, bonus_dmg=race_bonus_dmg, extra_hit_points=race_extra_hit_points)
 
             for attr_name, attr_value in player_data.items():
-                if attr_name != "race_attributes" and attr_name != "equipment":
+                if attr_name not in ("race_attributes", "equipment"):
                     setattr(player, attr_name, attr_value)
 
             for skill_name, skill_function_name in race_skills_data.items():

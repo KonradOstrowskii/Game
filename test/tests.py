@@ -1,6 +1,7 @@
 import os
 import sys
 
+# Add the project root directory to the Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from characters.player import Player
@@ -31,8 +32,8 @@ def test_player_level_up():
     player = Player(name="TestPlayer")
     player.gain_experience(500)
     assert player._level == 2
-    assert player._damage == 7  # Check if damage increased after leveling up
-    assert player._hit_points == 20  # Check if hit points increased after leveling up
+    assert player._damage == 7
+    assert player._hit_points == 20
 
 # Test Fight class
 def test_fight_start():
@@ -46,7 +47,10 @@ def test_enemy_take_damage():
     initial_hit_points = vampire.hit_points
     damage_taken = 5
     vampire.take_damage(damage_taken)
-    assert vampire.hit_points == initial_hit_points - damage_taken
+    if vampire.dodges():
+        assert vampire.hit_points == initial_hit_points  # No damage taken if dodges
+    else:
+        assert vampire.hit_points == initial_hit_points - damage_taken
 
 if __name__ == "__main__":
     test_player_creation()

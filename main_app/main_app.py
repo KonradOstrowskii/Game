@@ -1,3 +1,7 @@
+"""
+Main application module for the game.
+"""
+
 import os
 import sys
 
@@ -15,12 +19,16 @@ created_player = None
 loaded_player = None
 
 def print_menu():
+    """
+    Print the main menu.
+    """
     print("Menu:")
     print("1. Create a new player")
     print("2. Load an existing player")
     print("3. Exit")
 
 if __name__ == "__main__":
+    # Ensure the 'saved_players' directory exists
     save_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'saved_players')
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
@@ -72,8 +80,10 @@ if __name__ == "__main__":
         else:
             print("Invalid choice. Please enter a valid option.")
 
-    monster_instance = Skeleton()  
-    
+    # player_instance = create_player()
+    monster_instance = Skeleton()  # Create an instance of the Skeleton class
+
+    # Define the fight variable outside the conditional statement
     fight = None
 
     if created_player is None:
@@ -81,5 +91,6 @@ if __name__ == "__main__":
     else:
         fight = Fight(created_player, monster_instance)
 
+    # Check if the fight variable is not None before calling start()
     if fight:
         fight.start()

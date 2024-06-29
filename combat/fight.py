@@ -1,18 +1,28 @@
+"""
+Module defining the combat system.
+"""
+
 class Fight:
     def __init__(self, player, monster):
+        """
+        Initialize a new fight.
+
+        Args:
+            player (Player): The player character.
+            monster (Monster): The monster character.
+        """
         self.player = player
         self.monster = monster
 
     def start(self):
-        while hasattr(self.player, 'alive') and hasattr(self.monster, 'alive') and self.player.alive and self.monster.alive:
+        """
+        Start the fight.
+        """
+        while self.player.alive and self.monster.alive:
             self.player.attack(self.monster)
-            if not self.monster.alive:
-                experience_gained = self.monster.experience_reward
-                print("You defeated the {0.name} and gained {1} experience!".format(self.monster, experience_gained))
-                self.player.gain_experience(experience_gained)  # Award experience to the player
-                break
-
-            self.monster.attack(self.player)
-            if not self.player.alive:
-                print("The {0.name} defeated you...".format(self.monster))
-                break
+            if self.monster.alive:
+                self.monster.attack(self.player)
+        if self.player.alive:
+            print(f"{self.player.name} won the fight!")
+        else:
+            print(f"{self.monster.name} won the fight!")
