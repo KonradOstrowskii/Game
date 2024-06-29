@@ -1,27 +1,38 @@
+import os
+import sys
+
+# Add the project root directory to the Python path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from characters.creating_player import create_player, print_race_descriptions
 from combat.fight import Fight
 from saving_data.save_and_load_player import save_player_to_json, load_player_from_json, list_available_players, print_json_file
-from characters.enemy import *
-from characters.race import Elf,Dwarf,Orc
-import os
+from characters.enemy import Skeleton
+from characters.race import Elf, Dwarf, Orc
+
 player_name = ""
 created_player = None
 loaded_player = None
+
 def print_menu():
     print("Menu:")
     print("1. Create a new player")
     print("2. Load an existing player")
     print("3. Exit")
 
-
 if __name__ == "__main__":
+    # Ensure the 'saved_players' directory exists within the main_app directory
+    save_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'saved_players')
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+
     while True:
-        filename = os.path.join("saved_players", f"{player_name.lower()}_player.json")
         print_menu()
         choice = input("Enter your choice (1/2/3): ")
 
         if choice == "1":
             created_player = create_player()
+            filename = os.path.join(save_dir, f"{created_player.name.lower()}_player.json")
             save_player_to_json(created_player)
             print_json_file(filename)
             break
@@ -44,7 +55,7 @@ if __name__ == "__main__":
                     print(f"Player '{player_name}' not found.")
                 else:
                     # Construct the filename based on the entered player name
-                    filename = os.path.join("saved_players", f"{player_name.lower()}_player.json")
+                    filename = os.path.join(save_dir, f"{player_name.lower()}_player.json")
 
                     # Load the player from the file
                     loaded_player = load_player_from_json(player_name)
@@ -61,19 +72,18 @@ if __name__ == "__main__":
             break
         else:
             print("Invalid choice. Please enter a valid option.")
-# player_instance = create_player()
-monster_instance = Skeleton()  # Create an instance of the Skeleton class
 
-# Define the fight variable outside the conditional statement
-fight = None
+    # player_instance = create_player()
+    monster_instance = Skeleton()  # Create an instance of the Skeleton class
 
-if created_player is None:
-    fight = Fight(loaded_player, monster_instance)
-else:
-    fight = Fight(created_player, monster_instance)
+    # Define the fight variable outside the conditional statement
+    fight = None
 
-# Check if the fight variable is not None before calling start()
-if fight:
-    fight.start()
+    if created_player is None:
+        fight = Fight(loaded_player, monster_instance)
+    else:
+        fight = Fight(created_player, monster_instance)
 
-
+    # Check if the fight variable is not None before calling start()
+    if fight:
+        fight.start()
