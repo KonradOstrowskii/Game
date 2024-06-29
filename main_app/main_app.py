@@ -21,7 +21,6 @@ def print_menu():
     print("3. Exit")
 
 if __name__ == "__main__":
-    # Ensure the 'saved_players' directory exists within the main_app directory
     save_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'saved_players')
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
@@ -73,10 +72,8 @@ if __name__ == "__main__":
         else:
             print("Invalid choice. Please enter a valid option.")
 
-    # player_instance = create_player()
-    monster_instance = Skeleton()  # Create an instance of the Skeleton class
-
-    # Define the fight variable outside the conditional statement
+    monster_instance = Skeleton()  
+    
     fight = None
 
     if created_player is None:
@@ -84,6 +81,5 @@ if __name__ == "__main__":
     else:
         fight = Fight(created_player, monster_instance)
 
-    # Check if the fight variable is not None before calling start()
     if fight:
         fight.start()
