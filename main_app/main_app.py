@@ -10,13 +10,19 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from characters.creating_player import create_player, print_race_descriptions
 from combat.fight import Fight
-from saving_data.save_and_load_player import save_player_to_json, load_player_from_json, list_available_players, print_json_file
+from saving_data.save_and_load_player import (
+    save_player_to_json,
+    load_player_from_json,
+    list_available_players,
+    print_json_file,
+)
 from characters.enemy import Skeleton
 from characters.race import Elf, Dwarf, Orc
 
 player_name = ""
 created_player = None
 loaded_player = None
+
 
 def print_menu():
     """
@@ -27,9 +33,10 @@ def print_menu():
     print("2. Load an existing player")
     print("3. Exit")
 
+
 if __name__ == "__main__":
     # Ensure the 'saved_players' directory exists
-    save_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'saved_players')
+    save_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "saved_players")
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
 
@@ -39,7 +46,9 @@ if __name__ == "__main__":
 
         if choice == "1":
             created_player = create_player()
-            filename = os.path.join(save_dir, f"{created_player.name.lower()}_player.json")
+            filename = os.path.join(
+                save_dir, f"{created_player.name.lower()}_player.json"
+            )
             save_player_to_json(created_player)
             print_json_file(filename)
             break
@@ -55,14 +64,18 @@ if __name__ == "__main__":
                     print(name)
 
                 # Enter the name of the player you want to load
-                player_name = input("Enter the name of the player you want to load: ").capitalize()
+                player_name = input(
+                    "Enter the name of the player you want to load: "
+                ).capitalize()
 
                 # Check if the entered player name is in the available players list
                 if player_name not in available_players:
                     print(f"Player '{player_name}' not found.")
                 else:
                     # Construct the filename based on the entered player name
-                    filename = os.path.join(save_dir, f"{player_name.lower()}_player.json")
+                    filename = os.path.join(
+                        save_dir, f"{player_name.lower()}_player.json"
+                    )
 
                     # Load the player from the file
                     loaded_player = load_player_from_json(player_name)

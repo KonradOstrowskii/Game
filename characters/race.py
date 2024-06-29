@@ -1,3 +1,7 @@
+"""
+Module defining race.
+"""
+
 import random
 
 
@@ -13,13 +17,16 @@ class Race:
             self.skills[skill_name] = skill_function
 
     def get_skills_dict(self):
-        return {skill_name: skill_function.__name__ if skill_function else None for skill_name, skill_function in self.skills.items()}
+        return {
+            skill_name: skill_function.__name__ if skill_function else None
+            for skill_name, skill_function in self.skills.items()
+        }
 
 
 class Elf(Race):
     """
     Elves are graceful and intelligent beings, known for their agility and affinity for magic.
-    As an Elf, you possess the unique ability to dodge attacks with a 20% chance, 
+    As an Elf, you possess the unique ability to dodge attacks with a 20% chance,
     showcasing your exceptional reflexes and evasive skills.
     Elves start with a Narrow Sword and a Basic Cap, providing additional damage and hit points.
     """
@@ -141,7 +148,7 @@ class Orc(Race):
     def berserk(self):
         """
         Check if the Orc's Berserk ability triggers.
-        
+
         Returns:
             bool: True if the Berserk ability triggers, False otherwise.
         """

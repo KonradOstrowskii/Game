@@ -1,6 +1,7 @@
 """
 Module defining the Player class.
 """
+
 from .equipment import Equipment, Weapon, Helmet
 
 
@@ -10,7 +11,7 @@ class Player(object):
 
     Args:
         name (str): The name of the player character.
-    
+
     Attributes:
         name (str): The name of the player character.
         _lives (int): The number of lives the player has.
@@ -41,8 +42,13 @@ class Player(object):
     def __str__(self):
         race_name = self.race.name if self.race else "No race"
         return "Name: {}, Level: {}, Damage: {}, Experience: {}, Hit Points: {}, Race: {}".format(
-                self.name, self._level, self._damage, self._experience, self._hit_points, race_name
-            )
+            self.name,
+            self._level,
+            self._damage,
+            self._experience,
+            self._hit_points,
+            race_name,
+        )
 
     def _get_lives(self):
         return self._lives
@@ -71,9 +77,9 @@ class Player(object):
         self._score = score
 
     def take_damage(self, damage):
-        if self.race and hasattr(self.race, 'dodges') and self.race.dodges():
+        if self.race and hasattr(self.race, "dodges") and self.race.dodges():
             return "**** Player dodge *****"
-        elif self.race and hasattr(self.race, 'block') and self.race.block():
+        elif self.race and hasattr(self.race, "block") and self.race.block():
             return "**** Player block *****"
         else:
             total_hit_points = self._hit_points
@@ -81,8 +87,11 @@ class Player(object):
 
             if remaining_points >= 0:
                 self._hit_points = remaining_points  # Update hit points
-                return "Player took {1} points damage and has {2} hit points left.".format(self, damage,
-                                                                                           self._hit_points)
+                return (
+                    "Player took {1} points damage and has {2} hit points left.".format(
+                        self, damage, self._hit_points
+                    )
+                )
             else:
                 self._lives -= 1
 
@@ -106,22 +115,24 @@ class Player(object):
                 self.add_skill(skill_name, skill_function)
 
             for attribute in dir(self.race):
-                if not attribute.startswith('__') and not callable(getattr(self.race, attribute)):
+                if not attribute.startswith("__") and not callable(
+                    getattr(self.race, attribute)
+                ):
                     if not hasattr(self, attribute):
                         setattr(self, attribute, getattr(self.race, attribute))
 
-                    if hasattr(self.race, 'dodges'):
+                    if hasattr(self.race, "dodges"):
                         self.dodges = self.race.dodges
 
-                    if hasattr(self.race, 'block'):
+                    if hasattr(self.race, "block"):
                         self.block = self.race.block
 
-                    if hasattr(self.race, 'berserk'):
+                    if hasattr(self.race, "berserk"):
                         self.berserk = self.race.berserk
 
     def attack(self, target):
         # Check if the player's race has the berserk ability
-        if hasattr(self.race, 'berserk') and self.race.berserk():
+        if hasattr(self.race, "berserk") and self.race.berserk():
             print("**** Berserk activated! ****")
             # Add the bonus damage from Berserk to the total damage
             damage_dealt = self._damage + self.bonus_dmg
@@ -149,7 +160,7 @@ class Player(object):
         Args:
             item (Item): The equipped item.
         """
-        if hasattr(item, 'bonus') and item.bonus:
+        if hasattr(item, "bonus") and item.bonus:
             if isinstance(item, Weapon):
                 self._damage += item.bonus
             if isinstance(item, Helmet):
@@ -157,17 +168,23 @@ class Player(object):
 
     def level_up(self):
         base_experience = 200  # Initial required experience for level 1
-        experience_multiplier = 2.3  # Multiplier for calculating required experience for each level
+        experience_multiplier = (
+            2.3  # Multiplier for calculating required experience for each level
+        )
 
         for level in range(self._level + 1, self._level + 2):
-            required_experience = int(base_experience * (experience_multiplier ** (level - 1)))
+            required_experience = int(
+                base_experience * (experience_multiplier ** (level - 1))
+            )
             if self._experience >= required_experience:
                 self._level = level
                 self._experience -= required_experience
                 print("{0.name} has leveled up to level {0._level}!".format(self))
                 self._level_up_attributes()
             else:
-                print("{0.name} does not have enough experience to level up.".format(self))
+                print(
+                    "{0.name} does not have enough experience to level up.".format(self)
+                )
 
     def gain_experience(self, amount):
         self._experience += amount
@@ -179,4 +196,3 @@ class Player(object):
         """
         self._damage += 2  # Increase damage
         self._hit_points += 10  # Increase hit points
-

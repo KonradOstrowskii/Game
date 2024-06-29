@@ -2,6 +2,7 @@
 Module defining equipment.
 """
 
+
 class Equipment:
     """
     Represents the equipment slots for a player character.
@@ -18,13 +19,13 @@ class Equipment:
 
     def __init__(self):
         self.slots = {
-            'helmet': None,
-            'weapon': None,
-            'shield': None,
-            'armor': None,
-            'shoes': None,
-            'ring': None,
-            'neckless': None
+            "helmet": None,
+            "weapon": None,
+            "shield": None,
+            "armor": None,
+            "shoes": None,
+            "ring": None,
+            "neckless": None,
         }
 
     def equip(self, item, player):
@@ -49,14 +50,14 @@ class Equipment:
             print("Invalid equipment slot: {}.".format(slot_type))
 
 
-class Weapon():
+class Weapon:
     def __init__(self, name, description, damage_bonus, attributes=None):
         self.name = name
         self.description = description
         self.damage_bonus = damage_bonus
         self.attributes = attributes
 
-        self.slot_type = 'weapon'
+        self.slot_type = "weapon"
 
     def to_dict(self):
         return {
@@ -73,7 +74,7 @@ class Helmet:
         self.description = description
         self.hit_points_bonus = hit_points_bonus
         self.attributes = attributes
-        self.slot_type = 'helmet'
+        self.slot_type = "helmet"
 
     def to_dict(self):
         return {
@@ -90,7 +91,7 @@ class Armor:
         self.description = description
         self.hit_points_bonus = hit_points_bonus
         self.attributes = attributes
-        self.slot_type = 'armor'
+        self.slot_type = "armor"
 
     def to_dict(self):
         return {
@@ -107,7 +108,7 @@ class Shield:
         self.description = description
         self.hit_points_bonus = hit_points_bonus
         self.attributes = attributes
-        self.slot_type = 'shield'
+        self.slot_type = "shield"
 
     def to_dict(self):
         return {
@@ -124,7 +125,7 @@ class Shoes:
         self.description = description
         self.hit_points_bonus = hit_points_bonus
         self.attributes = attributes
-        self.slot_type = 'shoes'
+        self.slot_type = "shoes"
 
     def to_dict(self):
         return {
@@ -141,7 +142,7 @@ class Ring:
         self.description = description
         self.hit_points_bonus = hit_points_bonus
         self.attributes = attributes
-        self.slot_type = 'ring'
+        self.slot_type = "ring"
 
     def to_dict(self):
         return {
@@ -158,7 +159,7 @@ class Neckless:
         self.description = description
         self.hit_points_bonus = hit_points_bonus
         self.attributes = attributes
-        self.slot_type = 'neckless'
+        self.slot_type = "neckless"
 
     def to_dict(self):
         return {
