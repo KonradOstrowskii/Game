@@ -1,3 +1,6 @@
+"""
+Module defining enemy class.
+"""
 import random
 
 class Monster:

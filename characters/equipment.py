@@ -1,3 +1,7 @@
+"""
+Module defining equipment.
+"""
+
 class Equipment:
     """
     Represents the equipment slots for a player character.

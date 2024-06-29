@@ -1,5 +1,5 @@
 """
-Module defining the combat system.
+Module defining the Player class.
 """
 from .equipment import Equipment, Weapon, Helmet
 
