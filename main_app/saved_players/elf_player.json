@@ -1,0 +1,35 @@
+{
+  "name": "Elf",
+  "level": 1,
+  "lives": 1,
+  "experience": 0,
+  "damage": 11,
+  "hit_points": 15,
+  "race_attributes": {
+    "name": "Elf",
+    "bonus_dmg": 6,
+    "extra_hit_points": 5,
+    "skills": {
+      "dodge": "dodges"
+    }
+  },
+  "equipment": {
+    "helmet": {
+      "name": "Basic Cap",
+      "description": "A simple cap",
+      "hit_points_bonus": 1,
+      "attributes": null
+    },
+    "weapon": {
+      "name": "Narrow Sword",
+      "description": "A dull sword",
+      "damage_bonus": 2,
+      "attributes": null
+    },
+    "shield": null,
+    "armor": null,
+    "shoes": null,
+    "ring": null,
+    "neckless": null
+  }
+}
