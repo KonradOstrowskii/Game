@@ -2,6 +2,11 @@
 Module for creating players.
 """
 
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from .equipment import Equipment, Weapon, Helmet
 from .player import Player
 from .race import Elf, Dwarf, Orc
