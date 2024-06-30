@@ -2,17 +2,24 @@
 Module for creating players.
 """
 
+from .equipment import Equipment, Weapon, Helmet
+from .player import Player
+from .race import Elf, Dwarf, Orc
+
 import os
 import sys
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from .equipment import Equipment, Weapon, Helmet
-from .player import Player
-from .race import Elf, Dwarf, Orc
-
 
 def print_race_descriptions():
+    """
+    Print descriptions of the available races for the player to choose from.
+
+    This function displays the names and descriptions of the three available races:
+    Elf, Dwarf, and Orc. It uses the __str__ method of each race class to provide
+    detailed descriptions.
+    """
     print("Available Races:")
     print("1. Elf")
     print(Elf.__str__(Elf()))
@@ -23,6 +30,31 @@ def print_race_descriptions():
 
 
 def create_player():
+    """
+    Create a new player character with a chosen race and initial equipment.
+
+    This function prompts the user to input a name for the player character and
+    select a race from the available options (Elf, Dwarf, Orc). Based on the chosen
+    race, it initializes the player's attributes and equips them with initial items.
+
+    The function does the following:
+    1. Prompts the user for the player's name.
+    2. Displays the available races and their descriptions.
+    3. Prompts the user to select a race.
+    4. Creates a Player object with the chosen name.
+    5. Sets the player's race and applies race-specific bonuses.
+    6. Equips the player with initial items based on the chosen race.
+
+    The loop ensures that a valid race choice is made before proceeding with player
+    creation.
+
+    Raises:
+        ValueError: If the race choice is invalid.
+
+    Returns:
+        Player: The created player object with the chosen race and initial equipment.
+    """
+
     player_name = input("Please choose your player name: ")
 
     print_race_descriptions()

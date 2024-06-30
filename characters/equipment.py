@@ -40,8 +40,6 @@ class Equipment:
             if self.slots[slot_type] is None:
                 self.slots[slot_type] = item
                 print("You have equipped {}.".format(item.name))
-
-                # Add the equipped item to the player's equipment slots
                 player.equipment.slots[slot_type] = item
                 return slot_type
             else:

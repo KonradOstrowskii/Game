@@ -5,7 +5,6 @@ Main application module for the game.
 import os
 import sys
 
-# Add the project root directory to the Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from characters.creating_player import create_player, print_race_descriptions
@@ -18,6 +17,7 @@ from saving_data.save_and_load_player import (
 )
 from characters.enemy import Skeleton
 from characters.race import Elf, Dwarf, Orc
+
 
 player_name = ""
 created_player = None
