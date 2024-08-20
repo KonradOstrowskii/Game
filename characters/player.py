@@ -38,6 +38,7 @@ class Player(object):
         self.skills = {}
         self.alive = True
         self.equipment = Equipment()
+        self.gold = 200
 
     def __str__(self):
         race_name = self.race.name if self.race else "No race"
@@ -109,8 +110,6 @@ class Player(object):
         if self.race:
             self._damage += self.race.bonus_dmg
             self._hit_points += self.race.extra_hit_points
-
-            # Copy skills from the race to the player's skills
             for skill_name, skill_function in self.race.skills.items():
                 self.add_skill(skill_name, skill_function)
 
@@ -131,10 +130,8 @@ class Player(object):
                         self.berserk = self.race.berserk
 
     def attack(self, target):
-        # Check if the player's race has the berserk ability
         if hasattr(self.race, "berserk") and self.race.berserk():
             print("**** Berserk activated! ****")
-            # Add the bonus damage from Berserk to the total damage
             damage_dealt = self._damage + self.bonus_dmg
         else:
             damage_dealt = self._damage
@@ -194,5 +191,5 @@ class Player(object):
         """
         Increase player attributes upon leveling up.
         """
-        self._damage += 2  # Increase damage
-        self._hit_points += 10  # Increase hit points
+        self._damage += 2 
+        self._hit_points += 10 
