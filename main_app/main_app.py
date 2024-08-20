@@ -31,18 +31,18 @@ def print_menu():
     print("Menu:")
     print("1. Create a new player")
     print("2. Load an existing player")
-    print("3. Exit")
+    print("3. Show available players")
+    print("4. Exit")
 
 
 if __name__ == "__main__":
-    # Ensure the 'saved_players' directory exists
     save_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "saved_players")
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
 
     while True:
         print_menu()
-        choice = input("Enter your choice (1/2/3): ")
+        choice = input("Enter your choice (1/2/3/4): ")
 
         if choice == "1":
             created_player = create_player()
@@ -53,7 +53,6 @@ if __name__ == "__main__":
             print_json_file(filename)
             break
         elif choice == "2":
-            # List available players
             available_players = list_available_players()
             print(available_players)
             if not available_players:
@@ -63,23 +62,17 @@ if __name__ == "__main__":
                 for name in available_players:
                     print(name)
 
-                # Enter the name of the player you want to load
                 player_name = input(
                     "Enter the name of the player you want to load: "
                 ).capitalize()
 
-                # Check if the entered player name is in the available players list
                 if player_name not in available_players:
                     print(f"Player '{player_name}' not found.")
                 else:
-                    # Construct the filename based on the entered player name
                     filename = os.path.join(
                         save_dir, f"{player_name.lower()}_player.json"
                     )
-
-                    # Load the player from the file
                     loaded_player = load_player_from_json(player_name)
-                    # Print the loaded player information
                     if loaded_player:
                         print("Player loaded successfully:")
                         print_json_file(filename)
@@ -88,22 +81,39 @@ if __name__ == "__main__":
                         print(f"Failed to load player '{player_name}'.")
                         break
         elif choice == "3":
+            available_players = list_available_players()
+            
+            if not available_players:
+                print("No saved players available.")
+            else:
+                print("Available players:")
+                for idx, player in enumerate(available_players, start=1):
+                    display_name = player.replace('_player.json', '')
+                    print(f"{idx}. {display_name}")
+                player_choice = input("Enter the number of the player you want to view: ")
+                
+                try:
+                    player_choice = int(player_choice)
+                    if 1 <= player_choice <= len(available_players):
+                        selected_player = available_players[player_choice - 1]
+                        player_file_path = os.path.join(f"{selected_player.lower()}_player.json")
+                        print_json_file(player_file_path)
+                    else:
+                        print("Invalid choice. Please select a valid player number.")
+                except ValueError:
+                    print("Invalid input. Please enter a number.")
+
+        elif choice == "4":
             print("Exiting the game. Goodbye!")
             break
         else:
             print("Invalid choice. Please enter a valid option.")
 
-    # player_instance = create_player()
-    monster_instance = Skeleton()  # Create an instance of the Skeleton class
-
-    # Define the fight variable outside the conditional statement
+    monster_instance = Skeleton() 
     fight = None
-
     if created_player is None:
         fight = Fight(loaded_player, monster_instance)
     else:
         fight = Fight(created_player, monster_instance)
-
-    # Check if the fight variable is not None before calling start()
     if fight:
         fight.start()
