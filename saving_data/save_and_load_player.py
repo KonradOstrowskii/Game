@@ -37,6 +37,7 @@ def save_player_to_json(player):
         "experience": player._experience,
         "damage": player._damage,
         "hit_points": player._hit_points,
+        "gold" : player.gold,
         "race_attributes": {
             "name": player.race.name,
             "bonus_dmg": player.race.bonus_dmg,
