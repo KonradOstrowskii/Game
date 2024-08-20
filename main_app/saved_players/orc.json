@@ -1,28 +1,29 @@
 {
-  "name": "Dwarf",
+  "name": "orc",
   "level": 1,
   "lives": 1,
   "experience": 0,
-  "damage": 9,
-  "hit_points": 17,
+  "damage": 12,
+  "hit_points": 14,
+  "gold": 200,
   "race_attributes": {
-    "name": "Dwarf",
-    "bonus_dmg": 4,
-    "extra_hit_points": 7,
+    "name": "Orc",
+    "bonus_dmg": 7,
+    "extra_hit_points": 4,
     "skills": {
-      "block": "block"
+      "berserk": "berserk"
     }
   },
   "equipment": {
     "helmet": {
-      "name": "Plain Helmet",
-      "description": "A simple helmet",
+      "name": "Old Helmet",
+      "description": "A worn helmet",
       "hit_points_bonus": 1,
       "attributes": null
     },
     "weapon": {
-      "name": "Weak Hammer",
-      "description": "A lightweight hammer",
+      "name": "Blunt Axe",
+      "description": "A dull axe",
       "damage_bonus": 2,
       "attributes": null
     },

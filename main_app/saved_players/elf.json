@@ -1,28 +1,29 @@
 {
-  "name": "Orc",
+  "name": "Elf",
   "level": 1,
   "lives": 1,
   "experience": 0,
-  "damage": 12,
-  "hit_points": 14,
+  "damage": 11,
+  "hit_points": 15,
+  "gold": 200,
   "race_attributes": {
-    "name": "Orc",
-    "bonus_dmg": 7,
-    "extra_hit_points": 4,
+    "name": "Elf",
+    "bonus_dmg": 6,
+    "extra_hit_points": 5,
     "skills": {
-      "berserk": "berserk"
+      "dodge": "dodges"
     }
   },
   "equipment": {
     "helmet": {
-      "name": "Old Helmet",
-      "description": "A worn helmet",
+      "name": "Basic Cap",
+      "description": "A simple cap",
       "hit_points_bonus": 1,
       "attributes": null
     },
     "weapon": {
-      "name": "Blunt Axe",
-      "description": "A dull axe",
+      "name": "Narrow Sword",
+      "description": "A dull sword",
       "damage_bonus": 2,
       "attributes": null
     },

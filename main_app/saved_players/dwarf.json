@@ -1,28 +1,29 @@
 {
-  "name": "Elf",
+  "name": "Dwarf",
   "level": 1,
   "lives": 1,
   "experience": 0,
-  "damage": 11,
-  "hit_points": 15,
+  "damage": 9,
+  "hit_points": 17,
+  "gold": 200,
   "race_attributes": {
-    "name": "Elf",
-    "bonus_dmg": 6,
-    "extra_hit_points": 5,
+    "name": "Dwarf",
+    "bonus_dmg": 4,
+    "extra_hit_points": 7,
     "skills": {
-      "dodge": "dodges"
+      "block": "block"
     }
   },
   "equipment": {
     "helmet": {
-      "name": "Basic Cap",
-      "description": "A simple cap",
+      "name": "Plain Helmet",
+      "description": "A simple helmet",
       "hit_points_bonus": 1,
       "attributes": null
     },
     "weapon": {
-      "name": "Narrow Sword",
-      "description": "A dull sword",
+      "name": "Weak Hammer",
+      "description": "A lightweight hammer",
       "damage_bonus": 2,
       "attributes": null
     },
