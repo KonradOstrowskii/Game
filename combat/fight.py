@@ -18,11 +18,14 @@ class Fight:
         """
         Start the fight.
         """
-        while self.player.alive and self.monster.alive:
-            self.player.attack(self.monster)
-            if self.monster.alive:
-                self.monster.attack(self.player)
-        if self.player.alive:
-            print(f"{self.player.name} won the fight!")
-        else:
-            print(f"{self.monster.name} won the fight!")
+        try:
+            while self.player.alive and self.monster.alive:
+                self.player.attack(self.monster)
+                if self.monster.alive:
+                    self.monster.attack(self.player)
+            if self.player.alive:
+                print(f"{self.player.name} won the fight!")
+            else:
+                print(f"{self.monster.name} won the fight!")
+        except Exception as e:
+            (print(f"Error {e}"))
