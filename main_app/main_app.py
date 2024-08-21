@@ -47,30 +47,30 @@ if __name__ == "__main__":
         if choice == "1":
             created_player = create_player()
             filename = os.path.join(
-                save_dir, f"{created_player.name.lower()}_player.json"
+                save_dir, f"{created_player.name.lower()}.json"
             )
             save_player_to_json(created_player)
             print_json_file(filename)
             break
-        elif choice == "2":
+        elif choice == "2" or choice == "3":
             available_players = list_available_players()
-            print(available_players)
             if not available_players:
                 print("No players found.")
             else:
                 print("Available Players:")
-                for name in available_players:
-                    print(name)
+                for index, name in enumerate(available_players, start=1):
+                    print(f"{index}. {name}")
 
-                player_name = input(
-                    "Enter the name of the player you want to load: "
-                ).capitalize()
+                player_index = input(
+                    "Enter the number of the player you want to load: "
+                )
 
-                if player_name not in available_players:
-                    print(f"Player '{player_name}' not found.")
+                if not player_index.isdigit() or int(player_index) < 1 or int(player_index) > len(available_players):
+                    print(f"Invalid selection.")
                 else:
+                    player_name = available_players[int(player_index) - 1]
                     filename = os.path.join(
-                        save_dir, f"{player_name.lower()}_player.json"
+                        save_dir, f"{player_name.lower()}.json"
                     )
                     loaded_player = load_player_from_json(player_name)
                     if loaded_player:
@@ -80,29 +80,6 @@ if __name__ == "__main__":
                     else:
                         print(f"Failed to load player '{player_name}'.")
                         break
-        elif choice == "3":
-            available_players = list_available_players()
-            
-            if not available_players:
-                print("No saved players available.")
-            else:
-                print("Available players:")
-                for idx, player in enumerate(available_players, start=1):
-                    display_name = player.replace('_player.json', '')
-                    print(f"{idx}. {display_name}")
-                player_choice = input("Enter the number of the player you want to view: ")
-                
-                try:
-                    player_choice = int(player_choice)
-                    if 1 <= player_choice <= len(available_players):
-                        selected_player = available_players[player_choice - 1]
-                        player_file_path = os.path.join(f"{selected_player.lower()}_player.json")
-                        print_json_file(player_file_path)
-                    else:
-                        print("Invalid choice. Please select a valid player number.")
-                except ValueError:
-                    print("Invalid input. Please enter a number.")
-
         elif choice == "4":
             print("Exiting the game. Goodbye!")
             break

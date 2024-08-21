@@ -23,7 +23,7 @@ def save_player_to_json(player):
         os.makedirs(folder_path)
 
     player_name = player.name
-    filename = os.path.join(folder_path, f"{player_name.lower()}_player.json")
+    filename = os.path.join(folder_path, f"{player_name}.json")
 
     equipped_items = {}
     for key, value in player.equipment.slots.items():
@@ -84,10 +84,10 @@ def list_available_players():
         os.path.dirname(os.path.abspath(__file__)), "..", "main_app", "saved_players"
     )
     player_files = [
-        file for file in os.listdir(folder_path) if file.endswith("_player.json")
+        file for file in os.listdir(folder_path) if file.endswith(".json")
     ]
     player_names = [
-        file.replace("_player.json", "").capitalize() for file in player_files
+        file.replace(".json", "").capitalize() for file in player_files
     ]
     return player_names
 
@@ -111,7 +111,7 @@ def load_player_from_json(player_name):
         print("No players found in the specified folder.")
         return None
 
-    filename = os.path.join(folder_path, f"{player_name.lower()}_player.json")
+    filename = os.path.join(folder_path, f"{player_name.lower()}.json")
 
     if os.path.exists(filename):
         with open(filename, "r", encoding="utf-8") as json_file:
