@@ -42,12 +42,13 @@ class Player(object):
 
     def __str__(self):
         race_name = self.race.name if self.race else "No race"
-        return "Name: {}, Level: {}, Damage: {}, Experience: {}, Hit Points: {}, Race: {}".format(
+        return "Name: {}, Level: {}, Damage: {}, Experience: {}, Hit Points: {}, Gold {}, Race: {}".format(
             self.name,
             self._level,
             self._damage,
             self._experience,
             self._hit_points,
+            self.gold,
             race_name,
         )
 
@@ -87,7 +88,7 @@ class Player(object):
             remaining_points = total_hit_points - damage
 
             if remaining_points >= 0:
-                self._hit_points = remaining_points  # Update hit points
+                self._hit_points = remaining_points  
                 return (
                     "Player took {1} points damage and has {2} hit points left.".format(
                         self, damage, self._hit_points
@@ -165,23 +166,22 @@ class Player(object):
 
     def level_up(self):
         base_experience = 200  # Initial required experience for level 1
-        experience_multiplier = (
-            2.3  # Multiplier for calculating required experience for each level
-        )
+        experience_multiplier = 2.3  # Multiplier for calculating required experience for each level
 
-        for level in range(self._level + 1, self._level + 2):
-            required_experience = int(
-                base_experience * (experience_multiplier ** (level - 1))
-            )
+        leveled_up = False
+        while True:
+            required_experience = int(base_experience * (experience_multiplier ** (self._level - 1)))
             if self._experience >= required_experience:
-                self._level = level
+                self._level += 1
                 self._experience -= required_experience
-                print("{0.name} has leveled up to level {0._level}!".format(self))
+                print(f"{self.name} has leveled up to level {self._level}!")
                 self._level_up_attributes()
+                leveled_up = True
             else:
-                print(
-                    "{0.name} does not have enough experience to level up.".format(self)
-                )
+                break
+        
+        if not leveled_up:
+            print(f"{self.name} does not have enough experience to level up.")
 
     def gain_experience(self, amount):
         self._experience += amount
