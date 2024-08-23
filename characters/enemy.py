@@ -61,8 +61,11 @@ class Monster:
         attack_result = target.take_damage(damage_dealt)
         print(attack_result)
 
-    def defeat(self):
-        print("You defeated the {}!".format(self.name))
+    def gold_reward(self):
+        gold = random.randint(100, 500)
+        return gold
+    
+    def exp_reward(self):
         return self.experience_reward
 
 

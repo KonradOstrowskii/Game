@@ -86,6 +86,8 @@ if __name__ == "__main__":
         else:
             print("Invalid choice. Please enter a valid option.")
 
+
+    
     monster_instance = Skeleton() 
     fight = None
     if created_player is None:
