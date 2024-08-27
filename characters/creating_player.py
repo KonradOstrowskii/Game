@@ -2,7 +2,7 @@
 Module for creating players.
 """
 
-from .equipment import Equipment, Weapon, Helmet
+from .equipment import Equipment, Weapon, Helmet, Ring, Shoes, Shield
 from .player import Player
 from .race import Elf, Dwarf, Orc
 
@@ -66,11 +66,13 @@ def create_player():
         if race_choice == "1":
             player.race = Elf()
             player.apply_race_bonuses()
-            weak_sword = Weapon("Narrow Sword", "A dull sword", damage_bonus=2)
-            weak_helmet = Helmet("Basic Cap", "A simple cap", hit_points_bonus=1)
+            weak_sword = Weapon("Narrow Sword", "A dull sword", damage_bonus = 2)
+            weak_helmet = Helmet("Basic Cap", "A simple cap", hit_points_bonus = 1)
+            rusty_ring = Ring("Rusty ring", "Rusty ring", hit_points_bonus = 2)
             equipment = Equipment()
             equipment.equip(weak_sword, player)
             equipment.equip(weak_helmet, player)
+            equipment.equip(rusty_ring, player)
             player.equip_items(equipment)
             break
         if race_choice == "2":
@@ -78,9 +80,11 @@ def create_player():
             player.apply_race_bonuses()
             weak_hammer = Weapon("Weak Hammer", "A lightweight hammer", damage_bonus=2)
             weak_helmet = Helmet("Plain Helmet", "A simple helmet", hit_points_bonus=1)
+            dirty_shoes = Shoes("Dirty shoes", "Dirty shoes", hit_points_bonus=2)
             equipment = Equipment()
             equipment.equip(weak_hammer, player)
             equipment.equip(weak_helmet, player)
+            equipment.equip(dirty_shoes, player)
             player.equip_items(equipment)
             break
         if race_choice == "3":
@@ -88,9 +92,11 @@ def create_player():
             player.apply_race_bonuses()
             weak_axe = Weapon("Blunt Axe", "A dull axe", damage_bonus=2)
             weak_helmet = Helmet("Old Helmet", "A worn helmet", hit_points_bonus=1)
+            shattered_shield = Shield("Shattered shield", "Shattered wooden shield", hit_points_bonus=3)
             equipment = Equipment()
             equipment.equip(weak_axe, player)
             equipment.equip(weak_helmet, player)
+            equipment.equip(shattered_shield, player)
             player.equip_items(equipment)
             break
         else:
