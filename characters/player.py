@@ -2,7 +2,7 @@
 Module defining the Player class.
 """
 
-from .equipment import Equipment, Weapon, Helmet
+from .equipment import Equipment, Weapon, Helmet, Ring, Shield, Armor, Shoes
 
 
 class Player(object):
@@ -149,7 +149,7 @@ class Player(object):
         for slot_type, item in equipment.slots.items():
             if item:
                 self.apply_item_bonus(item)
-                return equipment.slots.items()
+                
 
     def apply_item_bonus(self, item):
         """
@@ -158,11 +158,11 @@ class Player(object):
         Args:
             item (Item): The equipped item.
         """
-        if hasattr(item, "bonus") and item.bonus:
-            if isinstance(item, Weapon):
-                self._damage += item.bonus
-            if isinstance(item, Helmet):
-                self._hit_points += item.bonus
+        if hasattr(item, "damage_bonus") and item.damage_bonus:
+            self._damage += item.damage_bonus
+        if hasattr(item, "hit_points_bonus") and item.hit_points_bonus:
+            self._hit_points += item.hit_points_bonus
+
 
     def level_up(self):
         base_experience = 200  # Initial required experience for level 1
@@ -192,4 +192,4 @@ class Player(object):
         Increase player attributes upon leveling up.
         """
         self._damage += 2 
-        self._hit_points += 10 
+        self._hit_points += 5 
