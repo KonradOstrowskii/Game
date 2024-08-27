@@ -52,7 +52,35 @@ if __name__ == "__main__":
             save_player_to_json(created_player)
             print_json_file(filename)
             break
-        elif choice == "2" or choice == "3":
+        elif choice == "2":
+            available_players = list_available_players()
+            if not available_players:
+                print("No players found.")
+            else:
+                print("Available Players:")
+                for index, name in enumerate(available_players, start=1):
+                    print(f"{index}. {name}")
+
+                player_index = input(
+                    "Enter the number of the player you want to load: "
+                )
+
+                if not player_index.isdigit() or int(player_index) < 1 or int(player_index) > len(available_players):
+                    print(f"Invalid selection.")
+                else:
+                    player_name = available_players[int(player_index) - 1]
+                    filename = os.path.join(
+                        save_dir, f"{player_name.lower()}.json"
+                    )
+                    loaded_player = load_player_from_json(player_name)
+                    if loaded_player:
+                        print("Player loaded successfully:")
+                        print_json_file(filename)
+                        break
+                    else:
+                        print(f"Failed to load player '{player_name}'.")
+                        break
+        elif choice == "3":
             available_players = list_available_players()
             if not available_players:
                 print("No players found.")
@@ -87,7 +115,7 @@ if __name__ == "__main__":
             print("Invalid choice. Please enter a valid option.")
 
 
-    
+"""   
     monster_instance = Skeleton() 
     fight = None
     if created_player is None:
@@ -96,3 +124,4 @@ if __name__ == "__main__":
         fight = Fight(created_player, monster_instance)
     if fight:
         fight.start()
+"""
