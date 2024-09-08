@@ -50,7 +50,7 @@ class Elf(Race):
         Elves are graceful and intelligent beings, known for their agility and affinity for magic.
         As an Elf, you possess the unique ability to dodge attacks with a 20% chance, 
         showcasing your exceptional reflexes and evasive skills.
-        Elves start with a Narrow Sword and an Basic Cap, providing additional damage and hit points.
+        Elves start with a Narrow Sword and an Basic Cap and Rusty ring providing additional damage and hit points.
         """
         return description
 
@@ -74,7 +74,7 @@ class Dwarf(Race):
     Dwarves are sturdy and resilient beings, known for their mining skills and craftsmanship.
     As a Dwarf, your natural resistance to damage grants you the ability to block attacks with a 20% chance,
     allowing you to mitigate incoming damage and showcase your toughness.
-    Dwarf start with a Weak Hammer and a Plain Helmet, providing additional damage and hit points.
+    Dwarf start with a Weak Hammer and a Plain Helmet and Dirty shoes providing additional damage and hit points.
     """
 
     def __init__(self, name="Dwarf", bonus_dmg=4, extra_hit_points=7):
@@ -96,7 +96,7 @@ class Dwarf(Race):
         Dwarves are sturdy and resilient beings, known for their mining skills and craftsmanship.
         As a Dwarf, your natural resistance to damage grants you the ability to block attacks with a 20% chance,
         allowing you to mitigate incoming damage and showcase your toughness.
-        Dwarf start with a Weak Hammer and an Plain Helmet, providing additional damage and hit points.
+        Dwarf start with a Weak Hammer and an Plain Helmet and Shattered shield providing additional damage and hit points.
         """
         return description
 
