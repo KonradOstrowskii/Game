@@ -1,22 +1,12 @@
 """
-Module defining equipment.
+Module defining equipment and items.
 """
-
 
 class Equipment:
     """
-    Represents the equipment slots for a player character.
-
-    Attributes:
-        helmet (Helmet):       The equipped helmet.
-        weapon (Weapon):       The equipped weapon.
-        shield (Shield):       The equipped shield.
-        armor (Armor):         The equipped armor.
-        shoes (Shoes):         The equipped shoes.
-        ring (Ring):           The equipped ring.
-        neckless (Neckless):   The equipped neckless.
+    Represents the equipment slots for a player character. This class only manages
+    which item is in which slot. It does not handle player stats.
     """
-
     def __init__(self):
         self.slots = {
             "helmet": None,
@@ -25,144 +15,119 @@ class Equipment:
             "armor": None,
             "shoes": None,
             "ring": None,
-            "neckless": None,
+            "necklace": None,
         }
 
-    def equip(self, item, player):
+    def equip(self, item):
         """
         Equip the specified item to the corresponding equipment slot.
-
-        Args:
-            item (Item): The item to be equipped.
         """
-        slot_type = item.slot_type
+        slot_type = getattr(item, 'slot_type', None)
         if slot_type in self.slots:
             if self.slots[slot_type] is None:
                 self.slots[slot_type] = item
-                print("You have equipped {}.".format(item.name))
-                player.equipment.slots[slot_type] = item
-                return slot_type
+                print(f"You have equipped {item.name}.")
+                return True
             else:
-                print("You already have a {} equipped.".format(slot_type))
+                print(f"You already have a {slot_type} equipped.")
+                return False
         else:
-            print("Invalid equipment slot: {}.".format(slot_type))
+            print(f"Invalid equipment slot: {slot_type}.")
+            return False
 
+class Item:
+    """
+    Base class for all items in the game.
+    """
+    def __init__(self, name, description, slot_type, attributes=None):
+        self.name = name
+        self.description = description
+        self.slot_type = slot_type
+        self.attributes = attributes if attributes is not None else {}
 
-class Weapon:
+    def to_dict(self):
+        """Converts the item's common attributes to a dictionary."""
+        # --- KLUCZOWA POPRAWKA ---
+        # Dodajemy 'slot_type', aby system zapisu wiedział, jaki to przedmiot.
+        return {
+            "name": self.name,
+            "description": self.description,
+            "attributes": self.attributes,
+            "slot_type": self.slot_type, # <-- TA LINIA JEST NOWA
+        }
+
+class Weapon(Item):
     def __init__(self, name, description, damage_bonus, attributes=None):
-        self.name = name
-        self.description = description
+        super().__init__(name, description, "weapon", attributes)
         self.damage_bonus = damage_bonus
-        self.attributes = attributes
-
-        self.slot_type = "weapon"
 
     def to_dict(self):
-        return {
-            "name": self.name,
-            "description": self.description,
-            "damage_bonus": self.damage_bonus,
-            "attributes": self.attributes,
-        }
+        data = super().to_dict()
+        data["damage_bonus"] = self.damage_bonus
+        return data
 
 
-class Helmet:
+class Helmet(Item):
     def __init__(self, name, description, hit_points_bonus, attributes=None):
-        self.name = name
-        self.description = description
+        super().__init__(name, description, "helmet", attributes)
         self.hit_points_bonus = hit_points_bonus
-        self.attributes = attributes
-        self.slot_type = "helmet"
 
     def to_dict(self):
-        return {
-            "name": self.name,
-            "description": self.description,
-            "hit_points_bonus": self.hit_points_bonus,
-            "attributes": self.attributes,
-        }
+        data = super().to_dict()
+        data["hit_points_bonus"] = self.hit_points_bonus
+        return data
 
 
-class Armor:
+class Armor(Item):
     def __init__(self, name, description, hit_points_bonus, attributes=None):
-        self.name = name
-        self.description = description
+        super().__init__(name, description, "armor", attributes)
         self.hit_points_bonus = hit_points_bonus
-        self.attributes = attributes
-        self.slot_type = "armor"
 
     def to_dict(self):
-        return {
-            "name": self.name,
-            "description": self.description,
-            "hit_points_bonus": self.hit_points_bonus,
-            "attributes": self.attributes,
-        }
+        data = super().to_dict()
+        data["hit_points_bonus"] = self.hit_points_bonus
+        return data
 
 
-class Shield:
+class Shield(Item):
     def __init__(self, name, description, hit_points_bonus, attributes=None):
-        self.name = name
-        self.description = description
+        super().__init__(name, description, "shield", attributes)
         self.hit_points_bonus = hit_points_bonus
-        self.attributes = attributes
-        self.slot_type = "shield"
 
     def to_dict(self):
-        return {
-            "name": self.name,
-            "description": self.description,
-            "hit_points_bonus": self.hit_points_bonus,
-            "attributes": self.attributes,
-        }
+        data = super().to_dict()
+        data["hit_points_bonus"] = self.hit_points_bonus
+        return data
 
 
-class Shoes:
+class Shoes(Item):
     def __init__(self, name, description, hit_points_bonus, attributes=None):
-        self.name = name
-        self.description = description
+        super().__init__(name, description, "shoes", attributes)
         self.hit_points_bonus = hit_points_bonus
-        self.attributes = attributes
-        self.slot_type = "shoes"
 
     def to_dict(self):
-        return {
-            "name": self.name,
-            "description": self.description,
-            "hit_points_bonus": self.hit_points_bonus,
-            "attributes": self.attributes,
-        }
+        data = super().to_dict()
+        data["hit_points_bonus"] = self.hit_points_bonus
+        return data
 
 
-class Ring:
+class Ring(Item):
     def __init__(self, name, description, hit_points_bonus, attributes=None):
-        self.name = name
-        self.description = description
+        super().__init__(name, description, "ring", attributes)
         self.hit_points_bonus = hit_points_bonus
-        self.attributes = attributes
-        self.slot_type = "ring"
 
     def to_dict(self):
-        return {
-            "name": self.name,
-            "description": self.description,
-            "hit_points_bonus": self.hit_points_bonus,
-            "attributes": self.attributes,
-        }
+        data = super().to_dict()
+        data["hit_points_bonus"] = self.hit_points_bonus
+        return data
 
 
-class Neckless:
+class Necklace(Item):
     def __init__(self, name, description, hit_points_bonus, attributes=None):
-        self.name = name
-        self.description = description
+        super().__init__(name, description, "necklace", attributes)
         self.hit_points_bonus = hit_points_bonus
-        self.attributes = attributes
-        self.slot_type = "neckless"
 
     def to_dict(self):
-        return {
-            "name": self.name,
-            "description": self.description,
-            "hit_points_bonus": self.hit_points_bonus,
-            "attributes": self.attributes,
-        }
+        data = super().to_dict()
+        data["hit_points_bonus"] = self.hit_points_bonus
+        return data

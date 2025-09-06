@@ -2,7 +2,7 @@
 Module defining the Player class.
 """
 
-from .equipment import Equipment, Weapon, Helmet, Ring, Shield, Armor, Shoes
+from .equipment import Equipment
 
 
 class Player(object):
@@ -19,12 +19,14 @@ class Player(object):
         _experience (int): The experience points earned by the player.
         _damage (int): The base damage inflicted by the player character.
         _hit_points (int): The current hit points of the player character.
+        _hit_points_max (int): The maximum hit points of the player.
         race (Race): The chosen race instance for the player character.
-        skills (dict): A dictionary of player skills.
+        skills (dict): A dictionary of player skills, mainly for saving/loading.
         alive (bool): Indicates if the player character is alive.
-
-    Note:
-        The player's damage and hit points are initialized based on the initial level.
+        equipment (Equipment): The player's equipped items.
+        inventory (list): The player's backpack for storing items.
+        gold (int): The amount of gold the player has.
+        _score (int): The player's score.
     """
 
     def __init__(self, name):
@@ -33,30 +35,32 @@ class Player(object):
         self._level = 1
         self._experience = 0
         self._damage = 5
-        self._hit_points = self._level * 10
+        self._hit_points_max = 10
+        self._hit_points = self._hit_points_max
         self.race = None
         self.skills = {}
         self.alive = True
         self.equipment = Equipment()
+        self.inventory = []
         self.gold = 200
+        self._score = 0
 
     def __str__(self):
         race_name = self.race.name if self.race else "No race"
-        return "Name: {}, Level: {}, Damage: {}, Experience: {}, Hit Points: {}, Gold {}, Race: {}".format(
+        return "Name: {}, Level: {}, HP: {}/{}, Damage: {}, Exp: {}, Gold: {}, Race: {}".format(
             self.name,
             self._level,
+            self._hit_points,
+            self._hit_points_max,
             self._damage,
             self._experience,
-            self._hit_points,
             self.gold,
             race_name,
         )
 
+    # --- Properties Section ---
     def _get_lives(self):
         return self._lives
-
-    def _get_score(self):
-        return self.score
 
     def _set_lives(self, lives):
         if lives >= 0:
@@ -65,131 +69,113 @@ class Player(object):
             print("Lives cannot be negative")
             self._lives = 0
 
-    def _get_level(self):
-        return self._level
-
-    lives = property(_get_lives, _set_lives, _get_score)
+    lives = property(_get_lives, _set_lives)
 
     @property
     def score(self):
         return self._score
 
     @score.setter
-    def score(self, score):
-        self._score = score
-
-    def take_damage(self, damage):
-        if self.race and hasattr(self.race, "dodges") and self.race.dodges():
-            return "**** Player dodge *****"
-        elif self.race and hasattr(self.race, "block") and self.race.block():
-            return "**** Player block *****"
+    def score(self, value):
+        if value >= 0:
+            self._score = value
         else:
-            total_hit_points = self._hit_points
-            remaining_points = total_hit_points - damage
+            print("Score cannot be negative.")
+            self._score = 0
+    
+    # --- Combat and Stats Methods ---
+    def take_damage(self, damage):
+        if hasattr(self, "dodges") and self.dodges():
+            print(f"**** {self.name} dodged the attack! ****")
+            return
+        elif hasattr(self, "block") and self.block():
+            print(f"**** {self.name} blocked the attack! ****")
+            return
+        
+        remaining_points = self._hit_points - damage
 
-            if remaining_points >= 0:
-                self._hit_points = remaining_points  
-                return (
-                    "Player took {1} points damage and has {2} hit points left.".format(
-                        self, damage, self._hit_points
-                    )
-                )
+        if remaining_points > 0:
+            self._hit_points = remaining_points
+            print(f"{self.name} took {damage} points of damage and has {self._hit_points}/{self._hit_points_max} HP left.")
+        else:
+            self._lives -= 1
+            if self._lives > 0:
+                self._hit_points = self._hit_points_max
+                print(f"{self.name} lost a life and was restored to full health.")
             else:
-                self._lives -= 1
-
-                if self._lives > 0:
-                    self._hit_points = self._level * 10 + self.race.extra_hit_points
-                    return "Player lost a life".format(self)
-                else:
-                    self.alive = False
-                    return "Player is dead".format(self)
-
-    def add_skill(self, skill_name, skill_function):
-        self.skills[skill_name] = skill_function
-
-    def apply_race_bonuses(self):
-        if self.race:
-            self._damage += self.race.bonus_dmg
-            self._hit_points += self.race.extra_hit_points
-            for skill_name, skill_function in self.race.skills.items():
-                self.add_skill(skill_name, skill_function)
-
-            for attribute in dir(self.race):
-                if not attribute.startswith("__") and not callable(
-                    getattr(self.race, attribute)
-                ):
-                    if not hasattr(self, attribute):
-                        setattr(self, attribute, getattr(self.race, attribute))
-
-                    if hasattr(self.race, "dodges"):
-                        self.dodges = self.race.dodges
-
-                    if hasattr(self.race, "block"):
-                        self.block = self.race.block
-
-                    if hasattr(self.race, "berserk"):
-                        self.berserk = self.race.berserk
+                self.alive = False
+                self._hit_points = 0
+                print(f"--- {self.name} is dead. ---")
 
     def attack(self, target):
-        if hasattr(self.race, "berserk") and self.race.berserk():
-            print("**** Berserk activated! ****")
-            damage_dealt = self._damage + self.bonus_dmg
-        else:
-            damage_dealt = self._damage
-
+        damage_dealt = self._damage
+        if hasattr(self, "berserk") and self.berserk():
+            print("**** Berserk activated! Damage increased! ****")
+            damage_dealt = int(damage_dealt * 1.5)
+        
+        print(f"{self.name} attacks {target.name}, dealing {damage_dealt} damage.")
         target.take_damage(damage_dealt)
 
-    def equip_items(self, equipment):
+    # --- Character Progression and Management ---
+    def apply_race_bonuses(self):
         """
-        Equip items from the equipment to the player.
-
-        Args:
-            equipment (Equipment): The equipment containing items to be equipped.
+        Applies bonuses from the player's race. This includes base stats
+        and copying specific, known skills from the race to the player instance.
         """
-        for slot_type, item in equipment.slots.items():
-            if item:
-                self.apply_item_bonus(item)
-                
+        if self.race:
+            self._damage += self.race.bonus_dmg
+            self._hit_points_max += self.race.extra_hit_points
+            self._hit_points = self._hit_points_max
+            
+            # --- POPRAWIONA WERSJA ---
+            # Jawne i proste kopiowanie umiejętności. Bez pętli.
+            # To jest czysty, bezpieczny i czytelny kod.
+            if hasattr(self.race, "dodges"):
+                self.skills['dodge'] = self.race.dodges
+                self.dodges = self.race.dodges
+            if hasattr(self.race, "block"):
+                self.skills['block'] = self.race.block
+                self.block = self.race.block
+            if hasattr(self.race, "berserk"):
+                self.skills['berserk'] = self.race.berserk
+                self.berserk = self.race.berserk
 
     def apply_item_bonus(self, item):
         """
-        Apply the bonus provided by the equipped item.
-
-        Args:
-            item (Item): The equipped item.
+        Applies bonuses from an equipped item.
+        We decided to go with Option B: items only increase the maximum stats,
+        they do not provide healing on equip.
         """
         if hasattr(item, "damage_bonus") and item.damage_bonus:
             self._damage += item.damage_bonus
         if hasattr(item, "hit_points_bonus") and item.hit_points_bonus:
-            self._hit_points += item.hit_points_bonus
-
-
-    def level_up(self):
-        base_experience = 200  # Initial required experience for level 1
-        experience_multiplier = 2.3  # Multiplier for calculating required experience for each level
-
-        leveled_up = False
-        while True:
-            required_experience = int(base_experience * (experience_multiplier ** (self._level - 1)))
-            if self._experience >= required_experience:
-                self._level += 1
-                self._experience -= required_experience
-                print(f"{self.name} has leveled up to level {self._level}!")
-                self._level_up_attributes()
-                leveled_up = True
-            else:
-                break
-        
-        if not leveled_up:
-            print(f"{self.name} does not have enough experience to level up.")
+            self._hit_points_max += item.hit_points_bonus
+            # Nie dodajemy już bonusu do aktualnego HP, tylko do max.
 
     def gain_experience(self, amount):
         self._experience += amount
+        print(f"{self.name} gained {amount} experience points.")
         self.level_up()
 
+    def level_up(self):
+        base_experience = 200
+        experience_multiplier = 2.3
+        leveled_up = False
+        
+        required_experience = int(base_experience * (experience_multiplier ** (self._level - 1)))
+        while self._experience >= required_experience:
+            self._level += 1
+            self._experience -= required_experience
+            print(f"🎉 {self.name} has leveled up to level {self._level}! 🎉")
+            self._level_up_attributes()
+            leveled_up = True
+            required_experience = int(base_experience * (experience_multiplier ** (self._level - 1)))
+        
+        if not leveled_up:
+            print(f"Experience to next level: {self._experience}/{required_experience}")
+
     def _level_up_attributes(self):
-        """
-        Increase player attributes upon leveling up.
-        """
-        self._damage += 2 
-        self._hit_points += 5 
+        self._damage += 2
+        self._hit_points_max += 10
+        self._hit_points = self._hit_points_max # Awans na poziom przywraca pełne zdrowie
+        print(f"Damage increased to {self._damage}, Max Hit Points increased to {self._hit_points_max}.")

@@ -6,6 +6,10 @@ import random
 
 
 class Race:
+    """
+    Base class for all character races.
+    It holds the common attributes like name, bonus damage, and extra hit points.
+    """
     def __init__(self, name, bonus_dmg=0, extra_hit_points=0):
         self.name = name
         self.bonus_dmg = bonus_dmg
@@ -13,10 +17,12 @@ class Race:
         self.skills = {}
 
     def add_skill(self, skill_name, skill_function=None):
+        """Adds a skill to the race's skill dictionary."""
         if skill_function is not None:
             self.skills[skill_name] = skill_function
 
     def get_skills_dict(self):
+        """Returns a dictionary of skills for saving purposes."""
         return {
             skill_name: skill_function.__name__ if skill_function else None
             for skill_name, skill_function in self.skills.items()
@@ -33,15 +39,11 @@ class Elf(Race):
 
     def __init__(self, name="Elf", bonus_dmg=6, extra_hit_points=5):
         """
-
         Args:
             name (str): Elf
             bonus_dmg (int): Bonus damage . Defaults to 6.
             extra_hit_points (int): extra hit points . Defaults to 5.
         """
-        self.name = name
-        self.bonus_dmg = bonus_dmg
-        self.extra_hit_points = extra_hit_points
         super().__init__(name, bonus_dmg, extra_hit_points)
         self.add_skill("dodge", self.dodges)
 
@@ -62,10 +64,7 @@ class Elf(Race):
         Returns:
             bool: True if the dodge is successful, False otherwise.
         """
-        if random.randint(1, 5) == 5:
-            return True
-        else:
-            return False
+        return random.randint(1, 5) == 5
 
 
 class Dwarf(Race):
@@ -79,15 +78,11 @@ class Dwarf(Race):
 
     def __init__(self, name="Dwarf", bonus_dmg=4, extra_hit_points=7):
         """
-
         Args:
             name (str): Dwarf
             bonus_dmg (int): Bonus damage . Defaults to 3.
             extra_hit_points (int): extra hit points . Defaults to 10.
         """
-        self.name = name
-        self.bonus_dmg = bonus_dmg
-        self.extra_hit_points = extra_hit_points
         super().__init__(name, bonus_dmg, extra_hit_points)
         self.add_skill("block", self.block)
 
@@ -108,10 +103,7 @@ class Dwarf(Race):
         Returns:
             bool: True if the block is successful, False otherwise.
         """
-        if random.randint(1, 5) == 5:
-            return True
-        else:
-            return False
+        return random.randint(1, 5) == 5
 
 
 class Orc(Race):
@@ -130,9 +122,6 @@ class Orc(Race):
             bonus_dmg (int): Bonus damage. Defaults to 4.
             extra_hit_points (int): Extra hit points. Defaults to 5.
         """
-        self.name = name
-        self.bonus_dmg = bonus_dmg
-        self.extra_hit_points = extra_hit_points
         super().__init__(name, bonus_dmg, extra_hit_points)
         self.add_skill("berserk", self.berserk)
 
@@ -148,12 +137,7 @@ class Orc(Race):
     def berserk(self):
         """
         Check if the Orc's Berserk ability triggers.
-
-        Returns:
-            bool: True if the Berserk ability triggers, False otherwise.
+        Returns bool, indicating if the berserk was triggered.
+        The actual damage modification will be handled in the Player's attack method.
         """
-        if random.randint(1, 5) == 5:
-            self.bonus_dmg += 5
-            return True
-        else:
-            return False
+        return random.randint(1, 5) == 5

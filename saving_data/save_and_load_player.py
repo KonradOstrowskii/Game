@@ -1,187 +1,137 @@
 """
 Module for saving and loading player data.
 """
-
 import json
 import os
+
 from characters.player import Player
-from characters.equipment import Weapon, Helmet, Equipment
+from characters.race import Elf, Dwarf, Orc
+from characters.equipment import (
+    Equipment, Weapon, Helmet, Armor, Shield, Shoes, Ring, Necklace
+)
+
+RACE_CLASSES = {"Elf": Elf, "Dwarf": Dwarf, "Orc": Orc}
+ITEM_CLASSES = {
+    "weapon": Weapon,
+    "helmet": Helmet,
+    "armor": Armor,
+    "shield": Shield,
+    "shoes": Shoes,
+    "ring": Ring,
+    "necklace": Necklace,
+}
+SAVE_FOLDER_PATH = os.path.join(os.path.dirname(__file__), "..", "main_app", "saved_players")
 
 
 def save_player_to_json(player):
-    """
-    Save a player object to a JSON file.
+    """Saves a player object to a JSON file."""
+    if not os.path.exists(SAVE_FOLDER_PATH):
+        os.makedirs(SAVE_FOLDER_PATH)
 
-    Args:
-        player (Player): The player object to save.
-    """
-    folder_path = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "..", "main_app", "saved_players"
-    )
+    filename = os.path.join(SAVE_FOLDER_PATH, f"{player.name.lower()}.json")
 
-    if not os.path.exists(folder_path):
-        os.makedirs(folder_path)
-
-    player_name = player.name
-    filename = os.path.join(folder_path, f"{player_name}.json")
-
-    equipped_items = {}
-    for key, value in player.equipment.slots.items():
-        d = {key: value.to_dict() if value else None}
-        equipped_items.update(d)
+    equipped_items = {slot: item.to_dict() for slot, item in player.equipment.slots.items() if item}
+    inventory_items = [item.to_dict() for item in player.inventory]
 
     player_data = {
         "name": player.name,
         "level": player._level,
         "lives": player._lives,
         "experience": player._experience,
-        "damage": player._damage,
-        "hit_points": player._hit_points,
-        "gold" : player.gold,
-        "race_attributes": {
-            "name": player.race.name,
-            "bonus_dmg": player.race.bonus_dmg,
-            "extra_hit_points": player.race.extra_hit_points,
-            "skills": {
-                skill_name: skill_function.__name__
-                for skill_name, skill_function in player.race.skills.items()
-            },
-        },
+        "base_damage": player._damage, # Zapisujemy bazowe statystyki
+        "base_hp_max": player._hit_points_max,
+        "current_hp": player._hit_points,
+        "gold": player.gold,
+        "score": player._score,
+        "race": player.race.name if player.race else None,
         "equipment": equipped_items,
+        "inventory": inventory_items,
     }
 
-    with open(filename, "w", encoding="utf-8") as json_file:
-        json.dump(player_data, json_file, indent=2)
-
-    print(f"Player '{player_name}' saved to {filename}")
-
-
-def print_json_file(filename):
-    """
-    Print the contents of a JSON file.
-
-    Args:
-        filename (str): The path to the JSON file.
-    """
     try:
-        with open(filename, "r", encoding="utf-8") as json_file:
-            data = json.load(json_file)
-            print(json.dumps(data, indent=4))
-    except FileNotFoundError:
-        print(f"File not found: {filename}")
-    except json.JSONDecodeError as e:
-        print(f"Error decoding JSON from file {filename}: {e}")
+        with open(filename, "w", encoding="utf-8") as json_file:
+            json.dump(player_data, json_file, indent=4)
+        print(f"Player '{player.name}' saved successfully.")
+    except IOError as e:
+        print(f"Error: Could not save player data. Reason: {e}")
 
-
-def list_available_players():
-    """
-    List all available player files.
-
-    Returns:
-        list: A list of player names.
-    """
-    folder_path = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "..", "main_app", "saved_players"
-    )
-    player_files = [
-        file for file in os.listdir(folder_path) if file.endswith(".json")
-    ]
-    player_names = [
-        file.replace(".json", "").capitalize() for file in player_files
-    ]
-    return player_names
-
+def _recreate_item_from_data(item_data):
+    """Helper function to recreate an item object from its dictionary representation."""
+    item_type = item_data.get("slot_type")
+    if item_type in ITEM_CLASSES:
+        item_class = ITEM_CLASSES[item_type]
+        params = item_data.copy()
+        params.pop("slot_type", None)
+        params.pop("attributes", None) # Usuwamy, jeśli __init__ go nie przyjmuje
+        return item_class(**params)
+    return None
 
 def load_player_from_json(player_name):
-    """
-    Load a player object from a JSON file.
+    """Loads a player object from a JSON file."""
+    filename = os.path.join(SAVE_FOLDER_PATH, f"{player_name.lower()}.json")
 
-    Args:
-        player_name (str): The name of the player to load.
-
-    Returns:
-        Player: The loaded player object, or None if the player could not be loaded.
-    """
-    folder_path = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "..", "main_app", "saved_players"
-    )
-    available_players = list_available_players()
-
-    if not available_players:
-        print("No players found in the specified folder.")
+    if not os.path.exists(filename):
+        print(f"Error: Save file for '{player_name}' not found.")
         return None
 
-    filename = os.path.join(folder_path, f"{player_name.lower()}.json")
-
-    if os.path.exists(filename):
+    try:
         with open(filename, "r", encoding="utf-8") as json_file:
             player_data = json.load(json_file)
-
-        race_name = player_data["race_attributes"]["name"]
-        race_bonus_dmg = player_data["race_attributes"]["bonus_dmg"]
-        race_extra_hit_points = player_data["race_attributes"]["extra_hit_points"]
-        race_skills_data = player_data["race_attributes"]["skills"]
-
-        race_class = None
-        if race_name == "Dwarf":
-            from characters.race import Dwarf
-
-            race_class = Dwarf
-        elif race_name == "Elf":
-            from characters.race import Elf
-
-            race_class = Elf
-        elif race_name == "Orc":
-            from characters.race import Orc
-
-            race_class = Orc
-
-        if race_class is not None:
-            player = Player(player_name)
-            player.race = race_class(
-                name=race_name,
-                bonus_dmg=race_bonus_dmg,
-                extra_hit_points=race_extra_hit_points,
-            )
-
-            for attr_name, attr_value in player_data.items():
-                if attr_name not in ("race_attributes", "equipment"):
-                    setattr(player, attr_name, attr_value)
-
-            for skill_name, skill_function_name in race_skills_data.items():
-                skill_function = getattr(player.race, skill_function_name, None)
-                if skill_function:
-                    player.race.add_skill(skill_name, skill_function)
-
-            player.apply_race_bonuses()
-
-            equipment_data = player_data.get("equipment", {})
-            player.equipment = Equipment()
-
-            for slot_type, item_data in equipment_data.items():
-                item = None
-                if item_data:
-                    if slot_type == "weapon":
-                        item = Weapon(
-                            name=item_data["name"],
-                            description=item_data["description"],
-                            damage_bonus=item_data["damage_bonus"],
-                        )
-                    elif slot_type == "helmet":
-                        item = Helmet(
-                            name=item_data["name"],
-                            description=item_data["description"],
-                            hit_points_bonus=item_data["hit_points_bonus"],
-                        )
-
-                    if item:
-                        player.apply_item_bonus(item)
-                        player.equipment.slots[slot_type] = item
-
-            return player
-        else:
-            print(f"Race class not found for race: {race_name}")
-            return None
-    else:
-        print(f"Player file not found: {filename}")
+    except (IOError, json.JSONDecodeError) as e:
+        print(f"Error: Could not load player data. Reason: {e}")
         return None
+
+    player = Player(player_data["name"])
+
+    # Krok 1: Ustaw rasę i bazowe bonusy
+    race_name = player_data.get("race")
+    if race_name in RACE_CLASSES:
+        player.race = RACE_CLASSES[race_name]()
+        player.apply_race_bonuses()
+
+    # Krok 2: Wczytaj statystyki (bez bonusów)
+    player._level = player_data.get("level", 1)
+    player._lives = player_data.get("lives", 1)
+    player._experience = player_data.get("experience", 0)
+    player.gold = player_data.get("gold", 0)
+    player._score = player_data.get("score", 0)
+    
+    # Krok 3: Wczytaj i załóż ekwipunek, nakładając bonusy
+    equipment_data = player_data.get("equipment", {})
+    for slot, item_data in equipment_data.items():
+        item = _recreate_item_from_data(item_data)
+        if item:
+            player.equipment.equip(item)
+            player.apply_item_bonus(item)
+
+    # Krok 4: Wczytaj plecak
+    inventory_data = player_data.get("inventory", [])
+    for item_data in inventory_data:
+        item = _recreate_item_from_data(item_data)
+        if item:
+            player.inventory.append(item)
+
+    # Krok 5: Ustaw aktualne HP na końcu
+    player._hit_points = player_data.get("current_hp", player._hit_points_max)
+
+
+    print(f"Player '{player_name}' loaded successfully.")
+    print(player) # Pokaż statystyki wczytanego gracza
+    return player
+
+def list_available_players():
+    """Lists all available player save files."""
+    if not os.path.exists(SAVE_FOLDER_PATH):
+        return []
+    player_files = [f for f in os.listdir(SAVE_FOLDER_PATH) if f.endswith(".json")]
+    return [os.path.splitext(f)[0].capitalize() for f in player_files]
+
+def print_json_file(filename):
+    """Prints the contents of a JSON file."""
+    filepath = os.path.join(SAVE_FOLDER_PATH, f"{filename.lower()}.json")
+    try:
+        with open(filepath, "r", encoding="utf-8") as json_file:
+            data = json.load(json_file)
+            print(json.dumps(data, indent=4))
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"Error reading save file: {e}")
